@@ -124,6 +124,27 @@
                         <i class="fas fa-user box-icon" aria-hidden="true"></i>Profile
                     </a>
                     <hr class="soft my-1 text-white">
+                    <a class="nav-link px-3" href="">
+                        <i class="fas fa-info-circle box-icon" aria-hidden="true"></i>Permintaan
+                    </a>
+                    <a class="nav-link px-3" href="#user" type="button" data-bs-toggle="collapse" data-bs-target="#user">
+                        <i class="fas fa-users box-icon fa-fw"></i>Users
+                        <span class="indications">
+                            <i class="fas fa-angle-down fa-sm fa-fw"></i>
+                        </span>
+                    </a>
+                    <div id="user" class="accordion-collapse collapse" data-bs-parent="#nav-accordion">
+                        <a class="nav-link ps-4" href="">
+                            <i class="fas fa-user-tie box-icon text-center"></i>Penanggung Jawab
+                        </a>
+                        <a class="nav-link ps-4" href="">
+                            <i class="fas fa-users box-icon text-center fa-fw "></i>Pendamping
+                        </a>
+                    </div>
+                    <a class="nav-link px-3" href="">
+                        <i class="fas fa-car box-icon" aria-hidden="true"></i>Kendaraan
+                    </a>
+                    <hr class="soft my-1 text-white">
                     <a class="btnLogout nav-link px-3" href="#">
                         <i class="fas fa-sign-out-alt box-icon"></i>LogOut
                     </a>

@@ -81,26 +81,39 @@
                 Silahkan pilih dukungan layanan dengan mengklik menu di bawah ini.
             </p>
             <div class="flex flex-col gap-4">
-                <div class="flex justify-between gap-4 text-white">
-                    <a href="" class="flex flex-col justify-between items-end bg-gold w-full gap-3 p-3 rounded-lg">
-                        <ion-icon name="star" class="w-6 h-6"></ion-icon>
-                        <p class="font-medium text-sm text-left w-full">Dukungan Layanan Untuk <span class="font-bold">WAPRES</span></p>
-                    </a>
-                    <a href="" class="flex flex-col justify-start items-end bg-silver w-full gap-3 p-3 rounded-lg">
-                        <ion-icon name="man" class="w-6 h-6"></ion-icon>
-                        <p class="font-medium text-sm text-left w-full">Dukungan Layanan Untuk <span class="font-bold">TAMU NEGARA</span></p>
-                    </a>
-                </div>
-                <div class="flex justify-between gap-4 text-white">
-                    <a href="" class="flex flex-col justify-start items-end bg-red w-full gap-3 p-3 rounded-lg">
-                        <ion-icon name="id-card" class="w-6 h-6"></ion-icon>
-                        <p class="font-medium text-sm text-left w-full">Dukungan Layanan Untuk <span class="font-bold">ESELON</span></p>
-                    </a>
-                    <a href="{{ route ('layanan.pegawai') }}" class="flex flex-col justify-start items-end bg-purple w-full gap-3 p-3 rounded-lg">
-                        <ion-icon name="bag-sharp" class="w-6 h-6"></ion-icon>
-                        <p class="font-medium text-sm text-left w-full">Dukungan Layanan Untuk <span class="font-bold">PEGAWAI</span></p>
-                    </a>
-                </div>
+                @if(Auth::user()->unit_kerja === 'protokol')
+                    <div class="flex justify-between gap-4 text-white">
+                        <a href="" class="flex flex-col justify-between items-end bg-gold w-full gap-3 p-3 rounded-lg">
+                            <ion-icon name="star" class="w-6 h-6"></ion-icon>
+                            <p class="font-medium text-sm text-left w-full">Dukungan Layanan Untuk <span class="font-bold">WAPRES</span></p>
+                        </a>
+                        <a href="" class="flex flex-col justify-start items-end bg-silver w-full gap-3 p-3 rounded-lg">
+                            <ion-icon name="man" class="w-6 h-6"></ion-icon>
+                            <p class="font-medium text-sm text-left w-full">Dukungan Layanan Untuk <span class="font-bold">TAMU NEGARA</span></p>
+                        </a>
+                    </div>
+                    <div class="flex justify-between gap-4 text-white">
+                        <a href="" class="flex flex-col justify-start items-end bg-red w-full gap-3 p-3 rounded-lg">
+                            <ion-icon name="id-card" class="w-6 h-6"></ion-icon>
+                            <p class="font-medium text-sm text-left w-full">Dukungan Layanan Untuk <span class="font-bold">ESELON</span></p>
+                        </a>
+                        <a href="{{ route ('layanan.pegawai') }}" class="flex flex-col justify-start items-end bg-purple w-full gap-3 p-3 rounded-lg">
+                            <ion-icon name="bag-sharp" class="w-6 h-6"></ion-icon>
+                            <p class="font-medium text-sm text-left w-full">Dukungan Layanan Untuk <span class="font-bold">PEGAWAI</span></p>
+                        </a>
+                    </div>
+                @elseif(Auth::user()->unit_kerja === 'tutk')
+                    <div class="flex justify-between gap-4 text-white">
+                        <a href="" class="flex flex-col justify-start items-end bg-red w-full gap-3 p-3 rounded-lg">
+                            <ion-icon name="id-card" class="w-6 h-6"></ion-icon>
+                            <p class="font-medium text-sm text-left w-full">Dukungan Layanan Untuk <span class="font-bold">ESELON</span></p>
+                        </a>
+                        <a href="{{ route ('layanan.pegawai') }}" class="flex flex-col justify-start items-end bg-purple w-full gap-3 p-3 rounded-lg">
+                            <ion-icon name="bag-sharp" class="w-6 h-6"></ion-icon>
+                            <p class="font-medium text-sm text-left w-full">Dukungan Layanan Untuk <span class="font-bold">PEGAWAI</span></p>
+                        </a>
+                    </div>
+                @endif
             </div>
         </div>
     </section>

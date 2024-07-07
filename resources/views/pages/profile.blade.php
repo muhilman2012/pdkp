@@ -92,26 +92,16 @@
                     <input id="no_telp" name="no_telp" type="text" placeholder="" value="{{ $user->phone }}" class="mt-[4px] bg-white p-[12px] placeholder:text-placeholder rounded w-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold focus:border-gold" disabled>
                 </div>
                 <div class="flex flex-col w-full gap-1">
-                    <label for="sub_bagian" class="text-black font-medium text-[14px]">Sub Bagian</label>
-                    <input id="sub_bagian" name="sub_bagian" type="text" placeholder="" value="{{ $user->sub_bagian }}" class="mt-[4px] bg-white p-[12px] placeholder:text-placeholder rounded w-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold focus:border-gold" disabled>
-                </div>
-                <div class="flex flex-col w-full gap-1">
-                    <label for="bagian" class="text-black font-medium text-[14px]">Bagian</label>
-                    <input id="bagian" name="bagian" type="text" placeholder="" value="{{ $user->bagian }}" class="mt-[4px] bg-white p-[12px] placeholder:text-placeholder rounded w-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold focus:border-gold" disabled>
-                </div>
-                <div class="flex flex-col w-full gap-1">
-                    <label for="biro" class="text-black font-medium text-[14px]">Biro</label>
-                    <input id="biro" name="biro" type="text" placeholder="" value="{{ $user->biro }}" class="mt-[4px] bg-white p-[12px] placeholder:text-placeholder rounded w-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold focus:border-gold" disabled>
-                </div>
-                <div class="flex flex-col w-full gap-1">
-                    <label for="deputi" class="text-black font-medium text-[14px]">Deputi</label>
-                    <input id="deputi" name="deputi" type="text" placeholder="" value="{{ $user->deputi }}" class="mt-[4px] bg-white p-[12px] placeholder:text-placeholder rounded w-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold focus:border-gold" disabled>
+                    <label for="unit_kerja" class="text-black font-medium text-[14px]">Unit Kerja</label>
+                    <input id="unit_kerja" name="unit_kerja" type="text" placeholder="" value="{{ $user->unit_kerja }}" class="mt-[4px] bg-white p-[12px] placeholder:text-placeholder rounded w-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold focus:border-gold" disabled>
                 </div>
             </div>
-            <a href="edit_profil.html" class="mt-4 w-full rounded bg-silver text-center text-white font-semibold p-3 hover:bg-[#727171] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white focus:border-white">Edit Profil</a>
         </div>
-        <a href="{{ route ('pages.dashboard') }}" class="mt-4 w-full rounded bg-warning text-center text-white font-semibold p-3 hover:bg-[#FFF000] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white focus:border-white">Kembali</a>
-        <a href="{{ route ('logout') }}" class="mt-4 w-full rounded bg-danger text-center text-white font-semibold p-3 hover:bg-[#DE0000] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white focus:border-white">Keluar</a>
+        <div class="flex flex-col mt-4 gap-2">
+            <a href="edit_profil.html" class="w-full rounded bg-gold text-center text-white font-semibold p-3 hover:bg-[#B57F21] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white focus:border-white">Edit Profil</a>
+            <a href="{{ route ('pages.dashboard') }}" class="w-full rounded bg-transparent text-center text-danger font-semibold p-3 outline outline-2">Kembali</a>
+            <a href="{{ route ('logout') }}" class="w-full rounded bg-danger text-center text-white font-semibold p-3 hover:bg-[#DE0000] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white focus:border-white">Keluar</a>
+        </div>
     </section>
 </body>
 

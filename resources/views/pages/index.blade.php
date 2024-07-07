@@ -56,6 +56,11 @@
         <div class="flex flex-col justify-center items-start gap-y-7 mt-20">
             <h2 class="text-white text-4xl font-bold">LOG IN</h2>
             <div class="flex flex-col gap-6 w-full">
+                @if(request()->has('error'))
+                    <div class="alert alert-danger">
+                        {{ request()->get('error') }}
+                    </div>
+                @endif
                 <form method="POST" action="{{ route('pages.index.store') }}">
                 @csrf
                 <div class="flex flex-col w-full gap-4">

@@ -127,18 +127,19 @@
                     <a class="nav-link px-3" href="">
                         <i class="fas fa-info-circle box-icon" aria-hidden="true"></i>Permintaan
                     </a>
-                    <a class="nav-link px-3" href="#user" type="button" data-bs-toggle="collapse" data-bs-target="#user">
+                    <a class="nav-link collapsed" href="#users" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#users">
                         <i class="fas fa-users box-icon fa-fw"></i>Users
                         <span class="indications">
-                            <i class="fas fa-angle-down fa-sm fa-fw"></i>
+                            <i class="fas fa-angle-up fa-sm fa-fw"></i>
                         </span>
                     </a>
-                    <div id="user" class="accordion-collapse collapse" data-bs-parent="#nav-accordion">
-                        <a class="nav-link ps-4" href="">
-                            <i class="fas fa-user-tie box-icon text-center"></i>Penanggung Jawab
+                    <div id="users" class="accordion-collapse collapse" data-bs-parent="#nav-accordion">
+                        <a class="nav-link nav-link-child" href="{{ route('admin.users') }}">
+                            <i class="fas fa-users box-icon text-center"></i>Users
                         </a>
-                        <a class="nav-link ps-4" href="">
-                            <i class="fas fa-users box-icon text-center fa-fw "></i>Pendamping
+                        <a class="nav-link nav-link-child" href="{{ route('admin.pengemudi') }}">
+                            <i class="fas fa-id-card box-icon text-center fa-fw "></i>Pengemudi
                         </a>
                     </div>
                     <a class="nav-link px-3" href="">
@@ -146,7 +147,7 @@
                     </a>
                     <hr class="soft my-1 text-white">
                     <a class="btnLogout nav-link px-3" href="#">
-                        <i class="fas fa-sign-out-alt box-icon"></i>LogOut
+                        <i class="fas fa-sign-out-alt box-icon"></i>Logout
                     </a>
                 </nav>
             </div>
@@ -165,9 +166,6 @@
     <script src="{{ url('/assets/dist/js/admin/panel.js') }}"></script>
     <script src="{{ asset('/assets/ckeditor4/ckeditor.js') }}"></script>
     <script src="{{ asset('/assets/owl/owl.carousel.min.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.0/dist/jquery.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.full.min.js"></script>
     @livewireScripts
     @yield('script')
 

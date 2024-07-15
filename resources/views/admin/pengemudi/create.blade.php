@@ -23,47 +23,57 @@
                 @csrf
                 @method('post')
                 <div class="mb-3">
-                    <label for="images" class="form-label">Gambar Pengemudi</label>
-                    <input type="file" name="images" id="images"
-                        class="form-control @error('images') is-invalid @enderror">
-                    @error('images')
+                    <label for="foto" class="form-label">Foto Pengemudi</label>
+                    <input type="file" name="foto" id="foto"
+                        class="form-control @error('foto') is-invalid @enderror">
+                    @error('foto')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
                     @enderror
                 </div>
                 <div class="mb-3">
-                    <label for="title" class="form-label">Judul Pengemudi</label>
-                    <input type="text" name="title" class="form-control @error('title') is-invalid @enderror"
-                        value="{{ old('title') }}">
-                    @error('title')
+                    <label for="name" class="form-label">Nama Pengemudi</label>
+                    <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
+                        value="{{ old('name') }}">
+                    @error('name')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
                     @enderror
                 </div>
                 <div class="mb-3">
-                    <label for="description" class="form-label">Penjelasan Singkat</label>
-                    <textarea name="description" id="description" rows="3"
-                        class="form-control @error('description') is-invalid @enderror">{{ old('description') }}</textarea>
-                    @error('description')
+                    <label for="nip" class="form-label">NIP Pengemudi</label>
+                    <input type="text" name="nip" class="form-control @error('nip') is-invalid @enderror"
+                        value="{{ old('nip') }}">
+                    @error('nip')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
                     @enderror
                 </div>
                 <div class="mb-3">
-                    <label for="content" class="form-label">Content Kendaraan</label>
-                    <textarea name="content" id="editors" rows="10"
-                        class="form-control @error('content') is-invalid @enderror">{{ old('content') }}</textarea>
-                    @error('content')
+                    <label for="phone" class="form-label">No Telepon / Whatsapp Pengemudi</label>
+                    <input type="text" name="phone" class="form-control @error('phone') is-invalid @enderror"
+                        value="{{ old('phone') }}">
+                    @error('phone')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
                     @enderror
                 </div>
                 <div class="mb-3">
-                    <button type="submit" class="btn btn-custom-1 form-control">Save</button>
+                    <label for="email" class="form-label">Email Pengemudi</label>
+                    <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
+                        value="{{ old('email') }}">
+                    @error('email')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary form-control">Save</button>
                 </div>
             </form>
         </div>
@@ -81,7 +91,7 @@
     //     console.error(error);
     // });
     CKEDITOR.replace( 'editors', {
-        filebrowserUploadUrl: "{{route('admin.news.upload.editor', ['_token' => csrf_token() ])}}",
+        filebrowserUploadUrl: "{{route('admin.pengemudi.upload.editor', ['_token' => csrf_token() ])}}",
         filebrowserUploadMethod: 'form'
     });
 </script>

@@ -37,12 +37,12 @@
                     <td>{{ $item->name }}</td>
                     <td>{{ $item->phone }}</td>
                     <td>{{ $item->email }}</td>
-                    <td>{{ $item->unit_kerja }}</td>
+                    <td>{{ $item->divisi->nama }}</td>
                     <td class="text-nowrap">
                         <a href="" class="btn btn-outline-secondary btn-sm">
                             <i class="fas fa-pencil-alt fa-sm fa-fw"></i>
                         </a>
-                        <button wire:click="removed({{ $item->id_users }})" type="button"
+                        <button wire:click="removed({{ $item->id }})" type="button"
                             class="btn btn-outline-secondary btn-sm">
                             <i class="fas fa-trash fa-sm fa-fw"></i>
                         </button>

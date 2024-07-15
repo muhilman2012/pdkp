@@ -68,7 +68,11 @@
                 <img class="w-4/12 h-fit" src="{{ url ('/assets/logo/logo-pdkp-gold.png') }}" alt="Logo PDKP">
             </div>
             <div class="flex flex-col mt-5 items-center justify-center gap-4">
-                <img class="h-20 w-20 rounded-full" src="https://ui-avatars.com/api/?name={{ $user->name }}" alt="Avatar nickname jika tidak ada foto profile">
+                @if($user->foto)
+                    <img class="h-20 w-20 rounded-full" src="{{ asset('/images/users/' . $user->foto) }}" alt="Foto Profil {{ $user->name }}">
+                @else
+                    <img class="h-20 w-20 rounded-full" src="https://ui-avatars.com/api/?name={{ $user->name }}" alt="Avatar Default">
+                @endif
                 <div class="flex flex-col gap-0 items-center">
                     <p class="text-xl font-semibold">{{ $user->name }}</p>
                     <p class="text-silver">{{ $user->jabatan }}</p>
@@ -93,7 +97,7 @@
                 </div>
                 <div class="flex flex-col w-full gap-1">
                     <label for="unit_kerja" class="text-black font-medium text-[14px]">Unit Kerja</label>
-                    <input id="unit_kerja" name="unit_kerja" type="text" placeholder="" value="{{ $user->unit_kerja }}" class="mt-[4px] bg-white p-[12px] placeholder:text-placeholder rounded w-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold focus:border-gold" disabled>
+                    <input id="unit_kerja" name="unit_kerja" type="text" placeholder="" value="{{ $user->divisi->nama }}" class="mt-[4px] bg-white p-[12px] placeholder:text-placeholder rounded w-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold focus:border-gold" disabled>
                 </div>
             </div>
         </div>

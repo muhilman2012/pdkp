@@ -61,8 +61,7 @@
 </head>
 
 <body>
-    <section
-        class="flex flex-col justify-start px-4 mx-auto bg-white max-w-md pt-5 pb-10 h-screen text-black bg-center bg-cover bg-[url('/assets/images/bg-main.png')]">
+    <section class="flex flex-col justify-start px-4 mx-auto bg-white max-w-md pt-5 pb-10 h-full text-black bg-center bg-cover bg-[url('/assets/images/bg-main.png')]">
         <div class="flex justify-between">
             <img class="w-12" src="{{ asset('/assets/logo/logo-sekwapres.svg') }}" alt="Logo SETWAPRES">
             <img class="w-4/12 h-fit" src="{{ asset('/assets/logo/logo-pdkp-gold.png') }}" alt="Logo PDKP">
@@ -82,18 +81,18 @@
                     <label class="text-black font-medium text-[14px]">Waktu</label>
                     <div class="grid grid-cols-2 gap-4 w-full">
                         <div class="col-span-1 items-center">
-                            <input id="jam_kerja" name="waktu" type="radio" class="mt-[4px] bg-white p-[12px] rounded w-fit focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold focus:border-gold">
+                            <input id="jam_kerja" name="waktu" type="radio" value="Jam Kerja" class="mt-[4px] bg-white p-[12px] rounded w-fit focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold focus:border-gold" {{ old('waktu') == 'Jam Kerja' ? 'checked' : '' }}>
                             <label for="jam_kerja" class="text-black font-medium text-[14px]">Jam Kerja</label>
-                            @error('jam_kerja')
+                            @error('waktu')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
                             @enderror
                         </div>
                         <div class="col-span-1 items-center">
-                            <input id="luar_jam_kerja" name="waktu" type="radio" class="mt-[4px] bg-white p-[12px] rounded w-fit focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold focus:border-gold">
+                            <input id="luar_jam_kerja" name="waktu" type="radio" value="Luar Jam Kerja / Lembur" class="mt-[4px] bg-white p-[12px] rounded w-fit focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold focus:border-gold" {{ old('waktu') == 'Luar Jam Kerja / Lembur' ? 'checked' : '' }}>
                             <label for="luar_jam_kerja" class="text-black font-medium text-[14px]">Luar Jam Kerja / Lembur</label>
-                            @error('luar_jam_kerja')
+                            @error('waktu')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>

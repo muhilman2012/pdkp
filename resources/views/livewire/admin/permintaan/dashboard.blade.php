@@ -1,6 +1,6 @@
-<div>
+<div wire:poll.5s>
     <div class="d-flex mb-3">
-        <a href="{{ route('admin.kendaraan.create') }}" class="btn btn-outline-secondary">Tambah</a>
+        <small class="text-danger"><i>Halaman ini Otomatis Reload setiap 5 detik</i></small>
         <div class="d-flex ms-auto">
 			<input wire:model='search' type="text" class="form-control" placeholder="Cari...">
 			<div class="ms-2" style="width: 100px">
@@ -9,7 +9,7 @@
 					<option value="50">50</option>
 					<option value="100">100</option>
 					<option value="200">200</option>
-					<option value="99999999999">all</option>
+					<option value="99999999999">All</option>
 				</select>
 			</div>
 		</div>
@@ -19,9 +19,13 @@
             <thead class="alert-secondary">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Foto</th>
-                    <th scope="col">Nama kendaraan</th>
-                    <th scope="col">Phone</th>
+                    <th scope="col">ID Permintaan</th>
+                    <th scope="col">Layanan</th>
+                    <th scope="col">Pengguna</th>
+                    <th scope="col">No Telepon</th>
+                    <th scope="col">Tujuan</th>
+                    <th scope="col">Tanggal Permintaan</th>
+                    <th scope="col">Status</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
@@ -29,19 +33,27 @@
                 @foreach ($data as $index => $item)
                 <tr>
                     <th scope="row">{{ $index + 1 }}</th>
-                    <td>
-                        <img src="{{ url('/images/kendaraan/' . $item->foto ) }}" class="rounded" width="100px">
-                    </td>
-                    <td>{{ $item->name }}</td>
+                    <td>{{ $item->uuid }}</td>
+                    <td>{{ $item->layanan }}</td>
+                    <td>{{ $item->pengguna }}</td>
                     <td>{{ $item->phone }}</td>
+                    <td>{{ $item->tujuan_akhir }}</td>
+                    <td>{{ $item->created_at->format('d-m-Y') }}</td>
+                    <td>
+                    @if($item->status == 'BARU')
+                        <span class="badge rounded-pill bg-danger px-3">BARU</span>
+                    @elseif($item->status == 'DIKONFIRMASI')
+                        <span class="badge rounded-pill bg-warning px-3">DIKONFIRMASI</span>
+                    @elseif($item->status == 'DALAM PERJALANAN')
+                        <span class="badge rounded-pill bg-primary px-3">DALAM PERJALANAN</span>
+                    @elseif($item->status == 'SELESAI')
+                        <span class="badge rounded-pill bg-success px-3">SELESAI</span>
+                    @endif
+                    </td>
                     <td class="text-nowrap">
                         <a href="" class="btn btn-outline-secondary btn-sm">
                             <i class="fas fa-pencil-alt fa-sm fa-fw"></i>
                         </a>
-                        <button wire:click="removed({{ $item->id_users }})" type="button"
-                            class="btn btn-outline-secondary btn-sm">
-                            <i class="fas fa-trash fa-sm fa-fw"></i>
-                        </button>
                     </td>
                 </tr>
                 @endforeach

@@ -14,9 +14,16 @@ return new class extends Migration
         Schema::create('kendaraan', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('type');
+            $table->string('merk');
+            $table->string('type')->nullable();
             $table->string('nopol');
-            $table->string('jenis_bensin');
+            $table->string('jenis_bensin')->nullable();
+            $table->string('model')->nullable();
+            $table->string('warna')->nullable();
+            $table->string('images')->nullable();
+            $table->string('kategori');
+            $table->string('rute')->nullable();
+            $table->string('tahun');
             $table->timestamps();
         });
     }

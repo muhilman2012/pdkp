@@ -124,7 +124,7 @@
                         <i class="fas fa-user box-icon" aria-hidden="true"></i>Profile
                     </a>
                     <hr class="soft my-1 text-white">
-                    <a class="nav-link px-3" href="">
+                    <a class="nav-link px-3" href="{{ route('admin.permintaan') }}">
                         <i class="fas fa-info-circle box-icon" aria-hidden="true"></i>Permintaan
                     </a>
                     <a class="nav-link collapsed" href="#users" type="button" data-bs-toggle="collapse"
@@ -142,7 +142,7 @@
                             <i class="fas fa-id-card box-icon text-center fa-fw "></i>Pengemudi
                         </a>
                     </div>
-                    <a class="nav-link px-3" href="">
+                    <a class="nav-link px-3" href="{{ route('admin.kendaraan') }}">
                         <i class="fas fa-car box-icon" aria-hidden="true"></i>Kendaraan
                     </a>
                     <hr class="soft my-1 text-white">

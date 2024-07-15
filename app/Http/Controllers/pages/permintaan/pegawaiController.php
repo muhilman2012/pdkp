@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\permintaan;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class pegawaiController extends Controller
 {
@@ -57,6 +58,7 @@ class pegawaiController extends Controller
 
         // Inisialisasi data permintaan
         $data = new permintaan();
+        $data->uuid             = substr((string) Str::uuid(), 0, 10); // Generate UUID with 10 characters
         $data->waktu            = $request->waktu;
         $data->keperluan        = $request->keperluan;
         $data->capacity         = $request->capacity;
@@ -94,7 +96,7 @@ class pegawaiController extends Controller
 
         // Tambahkan data default
         $data->status           = 'BARU';  // status layanan terbaru
-        $data->layanan          = 'pegawai';  // default layanan pegawai
+        $data->layanan          = 'Pegawai';  // default layanan pegawai
 
         if ($data->save()) {
             return redirect()->route('pages.dashboard')->with('success', 'Permintaan Kendaraan Berhasil');

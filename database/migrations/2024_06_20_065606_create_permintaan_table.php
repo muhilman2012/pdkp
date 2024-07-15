@@ -12,13 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('permintaan', function (Blueprint $table) {
-            $table->id('id_permintaan');
+            $table->uuid('id_permintaan')->primary(); // Tetapkan primary key
+            $table->string('uuid', 10)->unique(); // Tambahkan kolom uuid dengan panjang 10 karakter
             $table->string('layanan');
             $table->string('waktu');
             $table->string('keperluan');
             $table->string('pengguna');
             $table->string('phone');
-            $table->string('capacity');
+            $table->integer('capacity'); // Ubah ke integer jika kapasitas adalah angka
             $table->string('tipe_perjalanan');
             $table->time('jam_awal');
             $table->time('jam_akhir');

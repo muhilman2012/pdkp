@@ -23,16 +23,23 @@ class kendaraanAdmin extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'title'        => 'required',
-            'description'  => 'required',
-            'content'      => 'required',
-            'images'       => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            // 'imagesMultiple.*'  => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'name'          => 'required',
+            'merk'          => 'required',
+            'type'          => 'nullable',
+            'nopol'         => 'required',
+            'jenis_bensin'  => 'nullable',
+            'model'         => 'nullable',
+            'warna'         => 'nullable',
+            'kategori'      => 'required',
+            'rute'          => 'nullable',
+            'tahun'         => 'required',
+            'images'        => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ], [
-            'title.required'        => 'Please input field title kendaraan',
-            'description.required'  => 'Please input field description kendaraan',
-            'content.required'      => 'Please input field content kendaraan',
-            'images.required'       => 'Please upload images',
+            'name.required'         => 'Harap isi Nama Kendaraan',
+            'merk.required'         => 'Harap isi Merk Kendaraan',
+            'nopol.required'        => 'Harap isi Nomor Polisi Kendaraan',
+            'jenis_bensin.required' => 'Harap isi Jenis Bensin Kendaraan',
+            'tahun.required'        => 'Harap isi Tahun Kendaraan',
             'images.image'          => 'File is not images',
             'images.mimes'          => 'File must be images',
             'images.max'            => 'File images oversized',
@@ -41,27 +48,47 @@ class kendaraanAdmin extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         } else {
-            // slug from title
-            $slug = Str::slug($request->title);
-            // images 
-            $resorce = $request->images;
-            $originNamaImages = $resorce->getClientOriginalName();
-            $NewNameImage = "IMG-" . substr(md5($originNamaImages . date("YmdHis")), 0, 14);
-            $namasamplefoto = $NewNameImage . "." . $resorce->getClientOriginalExtension();
-            // schedule
-            $schedule = $request->dates . ' ' . date('H:i:s', strtotime($request->times));
+            $data = new Kendaraan();
+            $data->name = $request->name;
+            $data->merk = $request->merk;
+            $data->type = $request->type;
+            $data->nopol = $request->nopol;
+            $data->jenis_bensin = $request->jenis_bensin;
+            $data->model = $request->model;
+            $data->warna = $request->warna;
+            $data->kategori = $request->kategori;
+            $data->rute = $request->rute;
+            $data->tahun = $request->tahun;
 
-            $data = new kendaraan();
-            $data->title = $request->title;
-            $data->slug = $slug;
-            $data->description = $request->description;
-            $data->content = $request->content;
-            $data->images = $namasamplefoto;
-            $resorce->move(public_path() . "/images/kendaraan/", $namasamplefoto);
+            // Proses gambar jika ada
+            if ($request->hasFile('images')) {
+                // Ambil file gambar dari request
+                $resource = $request->file('images');
+
+                // Ambil nama asli dan ekstensi gambar
+                $originalName = $resource->getClientOriginalName();
+                $extension = $resource->getClientOriginalExtension();
+
+                // Ambil nama kendaraan dari request
+                $kendaraanName = $request->input('name');
+
+                // Buat nama baru untuk gambar
+                $newNameImage = "IMG-" . $kendaraanName . "-" . time() . "." . $extension;
+
+                // Tentukan path penyimpanan
+                $destinationPath = public_path('/images/kendaraan'); // atau path lain sesuai kebutuhan Anda
+
+                // Pindahkan file ke lokasi tujuan dengan nama baru
+                $resource->move($destinationPath, $newNameImage);
+
+                // Simpan informasi gambar ke database
+                $data->images = $newNameImage;
+            }
+
             if ($data->save()) {
-                return redirect()->route('admin.kendaraan')->with('success', 'kendaraan data saved successfully');
+                return redirect()->route('admin.kendaraan')->with('success', 'Data Kendaraan Berhasil Disimpan!');
             } else {
-                return redirect()->back()->with('error', 'sorry database is busy try again letter');
+                return redirect()->back()->with('error', 'Maaf, database sedang sibuk. Coba lagi nanti.');
             }
         }
     }

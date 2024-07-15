@@ -48,6 +48,9 @@
                         green: '#00A6A6',
                         red: '#880D1E',
                         purple: '#B98EA7',
+                        warning: '#FF0000',
+                        yellow: '#FFCD00',
+                        blue: '#008BFF',
                     }
                 }
             }
@@ -89,103 +92,70 @@
             <h4 class="font-semibold text-regular mb-3">Info Update Layanan</h4>
             <div class="flex flex-col gap-4 w-full">
                 @foreach($permintaan as $item)
-                    @if($item->layanan == 'wapres')
-                        <a href="" class="flex bg-white p-3 rounded-lg shadow-md gap-3 items-start w-full">
-                            <ion-icon name="star" class="text-gold h-6 w-6"></ion-icon>
-                            <div class="flex flex-col w-full gap-2">
-                                <div class="flex justify-between items-start">
-                                    <div class="flex flex-col gap-1">
-                                        <p class="text-xs ">{{ $item->tujuan_akhir }}</p>
-                                        <p class="text-xs ">{{ $item->jam_awal }}</p>
-                                    </div>
-                                    <div class="bg-gold py-1 px-2 rounded text-white">
-                                        <p class="font-bold text-xs">WAPRES</p>
-                                    </div>
-                                </div>
-                                <p class="font-semibold text-sm line-clamp-3">{{ $item->keperluan }}</p>
-                                <div class="flex justify-between items-center italic text-black text-xs">
-                                    <p>{{ $item->kendaraan }} , {{ $item->pengemudi }}</p>
-                                    <p>oleh {{ $item->pengguna }}</p>
-                                </div>
-                            </div>
-                        </a>
-                    @elseif($item->layanan == 'tamu')
-                        <a href="" class="flex bg-white p-3 rounded-lg shadow-md gap-3 items-start w-full">
-                            <ion-icon name="man" class="w-6 h-6 text-green"></ion-icon>
-                            <div class="flex flex-col w-full gap-2">
-                                <div class="flex justify-between items-start">
-                                    <div class="flex flex-col gap-1">
-                                        <p class="text-xs ">{{ $item->tujuan_akhir }}</p>
-                                        <p class="text-xs ">{{ $item->jam_awal }}</p>
-                                    </div>
-                                    <div class="bg-green py-1 px-2 rounded text-white">
-                                        <p class="font-bold text-xs">TAMU</p>
-                                    </div>
-                                </div>
-                                <p class="font-semibold text-sm line-clamp-3">{{ $item->keperluan }}</p>
-                                <div class="flex justify-between items-center italic text-black text-xs">
-                                    <p>{{ $item->kendaraan }} , {{ $item->pengemudi }}</p>
-                                    <p>oleh {{ $item->pengguna }}</p>
-                                </div>
-                            </div>
-                        </a>
-                    @elseif($item->layanan == 'eselon')
-                        <a href="" class="flex bg-white p-3 rounded-lg shadow-md gap-3 items-start w-full">
-                            <ion-icon name="id-card" class="w-6 h-6 text-red"></ion-icon>
-                            <div class="flex flex-col w-full gap-2">
-                                <div class="flex justify-between items-start">
-                                    <div class="flex flex-col gap-1">
-                                        <p class="text-xs ">{{ $item->tujuan_akhir }}</p>
-                                        <p class="text-xs ">{{ $item->jam_awal }}</p>
-                                    </div>
-                                    <div class="bg-red py-1 px-2 rounded text-white">
-                                        <p class="font-bold text-xs">ESELON</p>
-                                    </div>
-                                </div>
-                                <p class="font-semibold text-sm line-clamp-3">{{ $item->keperluan }}</p>
-                                <div class="flex justify-between items-center italic text-black text-xs">
-                                    <p>{{ $item->kendaraan }} , {{ $item->pengemudi }}</p>
-                                    <p>oleh {{ $item->pengguna }}</p>
-                                </div>
-                            </div>
-                        </a>
-                    @elseif($item->layanan == 'pegawai')
-                        <a href="" class="flex bg-white p-3 rounded-lg shadow-md gap-3 items-start w-full">
-                            <ion-icon name="bag-sharp" class="w-6 h-6 text-purple"></ion-icon>
-                            <div class="flex flex-col w-full gap-2">
-                                <div class="flex justify-between items-start">
-                                    <div class="flex flex-col gap-1">
-                                        <p class="text-xs ">{{ $item->tujuan_akhir }}</p>
-                                        <p class="text-xs ">{{ $item->jam_awal }}</p>
-                                    </div>
-                                    <div class="bg-green py-1 px-2 rounded text-white">
-                                        <p class="font-bold text-xs">{{ $item->status }}</p>
-                                    </div>
-                                </div>
-                                <p class="font-semibold text-sm line-clamp-3">{{ $item->keperluan }}</p>
-                                <div class="flex justify-between items-center italic text-black text-xs">
-                                    <p>{{ $item->kendaraan }} , {{ $item->pengemudi }}</p>
-                                    <p>oleh {{ $item->pengguna }}</p>
-                                </div>
-                            </div>
-                        </a>
+                    @if($item->status == 'SELESAI')
+                        @continue
                     @endif
+                    @php
+                        $bgColor = '';
+                        if ($item->status == 'BARU') {
+                            $bgColor = 'bg-warning';
+                        } elseif ($item->status == 'DIKONFIRMASI') {
+                            $bgColor = 'bg-yellow';
+                        } elseif ($item->status == 'DALAM PERJALANAN') {
+                            $bgColor = 'bg-blue';
+                        } elseif ($item->status == 'SELESAI') {
+                            $bgColor = 'bg-success';
+                        }
+                    @endphp
+                    <a href="" class="flex bg-white p-3 rounded-lg shadow-md gap-3 items-start w-full">
+                        @if($item->layanan == 'Wapres')
+                            <ion-icon name="star" class="text-gold h-6 w-6"></ion-icon>
+                        @elseif($item->layanan == 'Tamu')
+                            <ion-icon name="man" class="w-6 h-6 text-green"></ion-icon>
+                        @elseif($item->layanan == 'Eselon')
+                            <ion-icon name="id-card" class="w-6 h-6 text-red"></ion-icon>
+                        @elseif($item->layanan == 'Pegawai')
+                            <ion-icon name="bag-sharp" class="w-6 h-6 text-purple"></ion-icon>
+                        @endif
+                        <div class="flex flex-col w-full gap-2">
+                            <div class="flex justify-between items-start">
+                                <div class="flex flex-col gap-1">
+                                    <p class="text-xs">{{ $item->tujuan_akhir }}</p>
+                                    <p class="text-xs">{{ $item->jam_awal }}</p>
+                                </div>
+                                <div class="{{ $bgColor }} py-1 px-2 rounded text-white">
+                                    <p class="font-bold text-xs">{{ $item->status }}</p>
+                                </div>
+                            </div>
+                            <p class="font-semibold text-sm line-clamp-3">{{ $item->keperluan }}</p>
+                            <div class="flex justify-between items-center italic text-black text-xs">
+                                <p>{{ $item->kendaraan }} , {{ $item->pengemudi }}</p>
+                                <p>ID Permintaan : {{ $item->uuid }}</p>
+                            </div>
+                        </div>
+                    </a>
                 @endforeach
             </div>
         </div>
     </section>
 
     <script>
+        // Refresh halaman setiap 10 detik
+        setTimeout(function(){
+            location.reload();
+        }, 10000);
+    </script>
+    <script>
         document.addEventListener('DOMContentLoaded', function () {
             const greetingElement = document.getElementById('greeting');
             const currentHour = new Date().getHours();
             let greetingMessage = '';
 
-            if (currentHour >= 5 && currentHour < 12) {
+            if (currentHour >= 3 && currentHour < 10) {
                 greetingMessage = 'Selamat Pagi';
-            } else if (currentHour >= 12 && currentHour < 18) {
+            } else if (currentHour >= 10 && currentHour < 15) {
                 greetingMessage = 'Selamat Siang';
-            } else if (currentHour >= 18 && currentHour < 21) {
+            } else if (currentHour >= 15 && currentHour < 18) {
                 greetingMessage = 'Selamat Sore';
             } else {
                 greetingMessage = 'Selamat Malam';

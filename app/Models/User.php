@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\divisi;
 
 class User extends Authenticatable
 {
@@ -24,11 +25,7 @@ class User extends Authenticatable
         'phone',
         'foto',
         'nip',
-        'jabatan',
-        'sub_bagian',
-        'bagian',
-        'biro',
-        'deputi',
+        'unit_kerja',
         'password',
     ];
 
@@ -50,4 +47,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function divisi()
+    {
+        return $this->belongsTo(divisi::class, 'unit_kerja');
+    }
 }

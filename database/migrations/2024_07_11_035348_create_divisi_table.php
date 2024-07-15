@@ -11,13 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pengemudi', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('nip')->nullable();
-            $table->string('phone');
-            $table->string('email');
-            $table->string('foto');
+        Schema::create('divisi', function (Blueprint $table) {
+            $table->id('id_divisi');
+            $table->string('nama');
             $table->timestamps();
         });
     }
@@ -27,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pengemudi');
+        Schema::dropIfExists('divisi');
     }
 };

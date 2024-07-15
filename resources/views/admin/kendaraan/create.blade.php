@@ -22,6 +22,7 @@
             <form action="{{ route('admin.kendaraan.create.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 @method('post')
+                <div class="row">
                 <div class="mb-3">
                     <label for="images" class="form-label">Gambar Kendaraan</label>
                     <input type="file" name="images" id="images"
@@ -33,37 +34,107 @@
                     @enderror
                 </div>
                 <div class="mb-3">
-                    <label for="title" class="form-label">Judul Kendaraan</label>
-                    <input type="text" name="title" class="form-control @error('title') is-invalid @enderror"
-                        value="{{ old('title') }}">
-                    @error('title')
+                    <label for="name" class="form-label">Nama Kendaraan</label>
+                    <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
+                        value="{{ old('name') }}">
+                    @error('name')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
                     @enderror
                 </div>
                 <div class="mb-3">
-                    <label for="description" class="form-label">Penjelasan Singkat</label>
-                    <textarea name="description" id="description" rows="3"
-                        class="form-control @error('description') is-invalid @enderror">{{ old('description') }}</textarea>
-                    @error('description')
+                    <label for="merk" class="form-label">Merk Kendaraan</label>
+                    <input type="text" name="merk" class="form-control @error('merk') is-invalid @enderror"
+                        value="{{ old('merk') }}">
+                    @error('merk')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
                     @enderror
                 </div>
                 <div class="mb-3">
-                    <label for="content" class="form-label">Content Kendaraan</label>
-                    <textarea name="content" id="editors" rows="10"
-                        class="form-control @error('content') is-invalid @enderror">{{ old('content') }}</textarea>
-                    @error('content')
+                    <label for="type" class="form-label">Tipe Kendaraan</label>
+                    <input type="text" name="type" class="form-control @error('type') is-invalid @enderror"
+                        value="{{ old('type') }}">
+                    @error('type')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
                     @enderror
                 </div>
                 <div class="mb-3">
-                    <button type="submit" class="btn btn-custom-1 form-control">Save</button>
+                    <label for="nopol" class="form-label">Nomor Polisi Kendaraan</label>
+                    <input type="text" name="nopol" class="form-control @error('nopol') is-invalid @enderror"
+                        value="{{ old('nopol') }}">
+                    @error('nopol')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
+                <div class="mb-3">
+                    <label for="jenis_bensin" class="form-label">Jenis Bensin Kendaraan</label>
+                    <input type="text" name="jenis_bensin" class="form-control @error('jenis_bensin') is-invalid @enderror"
+                        value="{{ old('jenis_bensin') }}">
+                    @error('jenis_bensin')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
+                <div class="mb-3">
+                    <label for="model" class="form-label">Model Kendaraan</label>
+                    <input type="text" name="model" class="form-control @error('model') is-invalid @enderror"
+                        value="{{ old('model') }}">
+                    @error('model')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
+                <div class="mb-3">
+                    <label for="warna" class="form-label">Warna Kendaraan</label>
+                    <input type="text" name="warna" class="form-control @error('warna') is-invalid @enderror"
+                        value="{{ old('warna') }}">
+                    @error('warna')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
+                <div class="mb-3">
+                    <label for="kategori" class="form-label">Kategori Kendaraan</label>
+                    <input type="text" name="kategori" class="form-control @error('kategori') is-invalid @enderror"
+                        value="{{ old('kategori') }}">
+                    @error('kategori')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
+                <div class="mb-3">
+                    <label for="rute" class="form-label">Rute Kendaraan</label>
+                    <input type="text" name="rute" class="form-control @error('rute') is-invalid @enderror"
+                        value="{{ old('rute') }}">
+                    @error('rute')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
+                <div class="mb-3">
+                    <label for="tahun" class="form-label">Tahun Kendaraan</label>
+                    <input type="text" name="tahun" class="form-control @error('tahun') is-invalid @enderror"
+                        value="{{ old('tahun') }}">
+                    @error('tahun')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary form-control">Save</button>
                 </div>
             </form>
         </div>
@@ -81,7 +152,7 @@
     //     console.error(error);
     // });
     CKEDITOR.replace( 'editors', {
-        filebrowserUploadUrl: "{{route('admin.news.upload.editor', ['_token' => csrf_token() ])}}",
+        filebrowserUploadUrl: "{{route('admin.kendaraan.upload.editor', ['_token' => csrf_token() ])}}",
         filebrowserUploadMethod: 'form'
     });
 </script>

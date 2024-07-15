@@ -9,6 +9,7 @@ use App\Http\Controllers\auth\authAdmin;
 use App\Http\Controllers\admin\usersAdmin;
 use App\Http\Controllers\admin\pengemudiAdmin;
 use App\Http\Controllers\admin\kendaraanAdmin;
+use App\Http\Controllers\admin\permintaanAdmin;
 
 //pages Controller
 use App\Http\Controllers\pages\indexController;
@@ -76,6 +77,15 @@ Route::group(['prefix' => 'admin',  'middleware' => 'auth:admin'], function () {
     Route::put('/dashboard/kendaraan/perbarui/{id}', [kendaraanAdmin::class, 'update'])->name('admin.kendaraan.update');
     Route::put('/dashboard/kendaraan/detail/{id}', [kendaraanAdmin::class, 'show'])->name('admin.kendaraan.detail');
     Route::get('/dashboard/kendaraan/upload/editore', [kendaraanAdmin::class, 'editor'])->name('admin.kendaraan.upload.editor');
+
+    // permintaan menu routing
+    Route::get('/dashboard/permintaan', [permintaanAdmin::class, 'index'])->name('admin.permintaan');
+    Route::get('/dashboard/permintaan/tambah', [permintaanAdmin::class, 'create'])->name('admin.permintaan.create');
+    Route::post('/dashboard/permintaan/tambah/store', [permintaanAdmin::class, 'store'])->name('admin.permintaan.create.store');
+    Route::get('/dashboard/permintaan/ubah/{id}', [permintaanAdmin::class, 'edit'])->name('admin.permintaan.edit');
+    Route::put('/dashboard/permintaan/perbarui/{id}', [permintaanAdmin::class, 'update'])->name('admin.permintaan.update');
+    Route::put('/dashboard/permintaan/detail/{id}', [permintaanAdmin::class, 'show'])->name('admin.permintaan.detail');
+    Route::get('/dashboard/permintaan/upload/editore', [permintaanAdmin::class, 'editor'])->name('admin.permintaan.upload.editor');
 
     Route::get('/logout', [indexAdmin::class, 'logout'])->name('admin.logout');
 });

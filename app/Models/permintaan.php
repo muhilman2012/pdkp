@@ -4,9 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Carbon\Carbon;
 
-class permintaan extends Model
+class Permintaan extends Model
 {
     use HasFactory;
 
@@ -24,7 +25,13 @@ class permintaan extends Model
 
     protected $primaryKey = 'id_permintaan';
 
+    public $incrementing = false; // Pastikan primary key tidak auto-increment
+
+    protected $keyType = 'string'; // Tipe primary key adalah string
+
     protected $fillable = [
+        'id_permintaan',
+        'uuid',
         'layanan',
         'waktu',
         'keperluan',
@@ -34,11 +41,23 @@ class permintaan extends Model
         'jam_awal',
         'jam_akhir',
         'date',
-        'tujual_awal',
+        'tujuan_awal',
         'tujuan_akhir',
         'status',
         'pengemudi',
         'kendaraan',
         'file',
     ];
+
+    // Event booting untuk menghasilkan UUID saat membuat instance baru
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            if (empty($model->{$model->getKeyName()})) {
+                $model->{$model->getKeyName()} = (string) Str::uuid();
+            }
+        });
+    }
 }

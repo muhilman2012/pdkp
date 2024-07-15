@@ -3,96 +3,102 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use App\Models\divisi;
+use App\Models\permintaan;
+use App\Models\pengemudi;
+use App\Models\kendaraan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 
-class usersAdmin extends Controller
+class permintaanAdmin extends Controller
 {
     public function index()
     {
-        return view('admin.users.index');
+        return view('admin.permintaan.index');
     }
 
     public function create()
     {
-        $divisis = divisi::all(); // Mengambil semua data divisi dari tabel
-
-        return view('admin.users.create', compact('divisis'));
+        $pengemudi = pengemudi::all();
+        $kendaraan = kendaraan::all();
+        return view('admin.permintaan.create', compact('pengemudi', 'kendaraan'));
     }
 
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name'          => 'required',
-            'nip'           => 'required',
-            'phone'         => 'required',
-            'foto'          => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'email'         => 'required|min:8|email|max:255',
-            'unit_kerja'    => 'required',
+            'waktu'                     => 'required',
+            'keperluan'                 => 'required',
+            'jenis_pengguna'            => 'required',
+            'capacity'                  => 'required',
+            'tipe_perjalanan'           => 'required',
+            'jam_awal'                  => 'required',
+            'jam_akhir'                 => 'required',
+            'date'                      => 'required',
+            'tujuan_awal'               => 'required',
+            'tujuan_akhir'              => 'required',
+            'file'                      => 'nullable|mimes:pdf,doc,docx|max:5120', // validasi tipe file dan ukuran maksimum
         ], [
-            'name.required'       => 'Please input field Name!',
-            'nip.required'        => 'Please input field NIP!',
-            'phone.required'      => 'Please input field Phone!',
-            'foto.required'       => 'Please upload Foto',
-            'foto.image'          => 'File is not foto',
-            'foto.mimes'          => 'File must be foto',
-            'foto.max'            => 'File foto oversized',
-            'email.required'      => 'Masukan alamat Email!',
-            'email.min'           => 'Oops sepertinya bukan email!',
-            'email.email'         => 'Alamat email anda salah!',
-            'email.max'           => 'Oops email melampaui batas!',
-            'unit_kerja'          => 'Please input field Unit Kerja',
+            'waktu.required'            => 'Mohon pilih Waktu Permintaan',
+            'keperluan.required'        => 'Mohon isi Deskripsi Keperluan Permintaan',
+            'jenis_pengguna.required'   => 'Mohon pilih jenis pengguna',
+            'capacity.required'         => 'Mohon isi Jumlah Penumpang',
+            'tipe_perjalanan.required'  => 'Mohon pilih Tipe Perjalanan',
+            'jam_awal.required'         => 'Mohon isi Jam Pengantaran',
+            'jam_akhir.required'        => 'Mohon isi Jam Penjemputan',
+            'date.required'             => 'Mohon isi Tanggal Pengantaran',
+            'tujuan_awal.required'      => 'Mohon isi Lokasi Awal Pengantaran',
+            'tujuan_akhir.required'     => 'Mohon isi Lokasi Akhir Pengantaran',
+            'file.mimes'                => 'Tipe File Surat Tugas harus berupa PDF/DOC',
+            'file.max'                  => 'Ukuran File Notulen Maksimal 5MB',
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $file_name = null;
+        if ($request->hasFile('file')) {
+            // Simpan file PDF ke dalam folder surat tugas jika diunggah
+            $file_name = $request->file('file')->getClientOriginalName();
+            $request->file('file')->storeAs('public/file/surat_tugas', $file_name);
+        }
+
+        // Inisialisasi data permintaan
+        $data = new permintaan();
+        $data->uuid             = substr((string) Str::uuid(), 0, 10); // Generate UUID with 10 characters
+        $data->waktu            = $request->waktu;
+        $data->keperluan        = $request->keperluan;
+        $data->capacity         = $request->capacity;
+        $data->tipe_perjalanan  = $request->tipe_perjalanan;
+        $data->jam_awal         = $request->jam_awal;
+        $data->jam_akhir        = $request->jam_akhir;
+        $data->date             = $request->date;
+        $data->tujuan_awal      = $request->tujuan_awal;
+        $data->tujuan_akhir     = $request->tujuan_akhir;
+        $data->file             = $file_name;
+
+        if ($data->save()) {
+            return redirect()->route('admin.permintaan')->with('success', 'Permintaan permintaan Berhasil');
         } else {
-            // foto 
-            $resorce = $request->foto;
-            $extension = $resorce->getClientOriginalExtension();
-            $requestName = $request->input('name'); // Mengambil nama dari request
-            $NewNameImage = "IMG-" . $requestName;
-            $namasamplefoto = $NewNameImage . "." . $extension;
-        
-            $data = new User();
-            $data->name = $request->name;
-            $data->nip = $request->nip;
-            $data->phone = $request->phone;
-            $data->email = $request->email;
-            $data->unit_kerja = $request->unit_kerja;
-        
-            // Membuat password otomatis dengan format SWP-name
-            $autoPassword = "SWP-" . $requestName;
-            $data->password = bcrypt($autoPassword);
-        
-            $data->foto = $namasamplefoto;
-            $resorce->move(public_path() . "/images/users/", $namasamplefoto);
-        
-            if ($data->save()) {
-                return redirect()->route('admin.users')->with('success', 'Users data saved successfully with auto-generated password: ' . $autoPassword);
-            } else {
-                return redirect()->back()->with('error', 'Sorry, the database is busy. Please try again later.');
-            }
-        }        
+            return redirect()->back()->with('error', 'Terjadi Kesalahan saat melakukan Permintaan');
+        }
     }
 
     public function show($id)
     {
-         $data= User::find($id);
-         return view('admin.users.detail', [
+         $data= permintaan::find($id);
+         return view('admin.permintaan.detail', [
              'data' => $data
          ]);
     }
 
     public function edit($id)
     {
-        $data = User::find($id);
-        return view('admin.users.edit', [
-            'data' => $data
-        ]);
+        $data = permintaan::find($id);
+        $pengemudi = pengemudi::all();
+        $kendaraan = kendaraan::all();
+
+        return view('admin.permintaan.edit', compact('data', 'pengemudi', 'kendaraan'));
     }
 
     public function update(Request $request, $id)
@@ -103,7 +109,7 @@ class usersAdmin extends Controller
             'content'      => 'required',
             // 'imagesMultiple.*'  => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ], [
-            'title.required'        => 'Please input field title users',
+            'title.required'        => 'Please input field title permintaan',
             'description.required'  => 'Please input field description users',
             'content.required'      => 'Please input field content users',
         ]);
@@ -147,7 +153,7 @@ class usersAdmin extends Controller
                 }
             } else {
                 // update no images
-                $data = User::find($id);
+                $data = permintaan::find($id);
                 $data->title = $request->title;
                 $data->slug = $slug;
                 $data->description = $request->description;

@@ -185,6 +185,7 @@
     background-color: #dfdad2;
 }
 
+
 @media(max-width: 768px) {
     .slider {
         margin-left: -280px;

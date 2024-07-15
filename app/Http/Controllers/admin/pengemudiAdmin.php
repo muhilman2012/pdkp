@@ -23,43 +23,44 @@ class pengemudiAdmin extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'title'        => 'required',
-            'description'  => 'required',
-            'content'      => 'required',
-            'images'       => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'name'         => 'required',
+            'nip'          => 'nullable',
+            'phone'        => 'required',
+            'email'        => 'required|min:8|email|max:255',
+            'foto'       => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             // 'imagesMultiple.*'  => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ], [
-            'title.required'        => 'Please input field title pengemudi',
-            'description.required'  => 'Please input field description pengemudi',
-            'content.required'      => 'Please input field content pengemudi',
-            'images.required'       => 'Please upload images',
-            'images.image'          => 'File is not images',
-            'images.mimes'          => 'File must be images',
-            'images.max'            => 'File images oversized',
+            'name.required'       => 'Harap isi Nama Pengemudi',
+            'phone.required'      => 'Harap isi Nomor Pengemudi',
+            'email.required'      => 'Harap isi Email Pengemudi',
+            'email.min'           => 'Oops sepertinya bukan email!',
+            'email.email'         => 'Alamat email anda salah!',
+            'email.max'           => 'Oops email melampaui batas!',
+            'foto.required'     => 'Please upload images',
+            'foto.image'        => 'File is not images',
+            'foto.mimes'        => 'File must be images',
+            'foto.max'          => 'File images oversized',
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         } else {
-            // slug from title
-            $slug = Str::slug($request->title);
             // images 
-            $resorce = $request->images;
+            $resorce = $request->foto;
+            $pengemudiName = $request->input('name');
             $originNamaImages = $resorce->getClientOriginalName();
-            $NewNameImage = "IMG-" . substr(md5($originNamaImages . date("YmdHis")), 0, 14);
+            $NewNameImage = "IMG-" . $pengemudiName;
             $namasamplefoto = $NewNameImage . "." . $resorce->getClientOriginalExtension();
-            // schedule
-            $schedule = $request->dates . ' ' . date('H:i:s', strtotime($request->times));
 
             $data = new pengemudi();
-            $data->title = $request->title;
-            $data->slug = $slug;
-            $data->description = $request->description;
-            $data->content = $request->content;
-            $data->images = $namasamplefoto;
+            $data->name = $request->name;
+            $data->nip  = $request->nip;
+            $data->phone= $request->phone;
+            $data->email= $request->email;
+            $data->foto = $namasamplefoto;
             $resorce->move(public_path() . "/images/pengemudi/", $namasamplefoto);
             if ($data->save()) {
-                return redirect()->route('admin.pengemudi')->with('success', 'pengemudi data saved successfully');
+                return redirect()->route('admin.pengemudi')->with('success', 'Data Pengemudi Berhasil Ditambah!');
             } else {
                 return redirect()->back()->with('error', 'sorry database is busy try again letter');
             }

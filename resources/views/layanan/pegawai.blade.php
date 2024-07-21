@@ -78,29 +78,8 @@
                 @csrf
                 @method('post')
                 <div class="flex flex-col w-full gap-4">
-                    <label class="text-black font-medium text-[14px]">Waktu</label>
-                    <div class="grid grid-cols-2 gap-4 w-full">
-                        <div class="col-span-1 items-center">
-                            <input id="jam_kerja" name="waktu" type="radio" value="Jam Kerja" class="mt-[4px] bg-white p-[12px] rounded w-fit focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold focus:border-gold" {{ old('waktu') == 'Jam Kerja' ? 'checked' : '' }}>
-                            <label for="jam_kerja" class="text-black font-medium text-[14px]">Jam Kerja</label>
-                            @error('waktu')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                            @enderror
-                        </div>
-                        <div class="col-span-1 items-center">
-                            <input id="luar_jam_kerja" name="waktu" type="radio" value="Luar Jam Kerja / Lembur" class="mt-[4px] bg-white p-[12px] rounded w-fit focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold focus:border-gold" {{ old('waktu') == 'Luar Jam Kerja / Lembur' ? 'checked' : '' }}>
-                            <label for="luar_jam_kerja" class="text-black font-medium text-[14px]">Luar Jam Kerja / Lembur</label>
-                            @error('waktu')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                            @enderror
-                        </div>
-                    </div>
                     <div class="flex flex-col w-full gap-1">
-                        <label for="keperluan" class="text-black font-medium text-[14px]">Deskripsi Keperluan</label>
+                        <label for="keperluan" class="text-black font-medium text-[14px]">Deskripsi Keperluan / Tujuan</label>
                         <textarea id="keperluan" name="keperluan" rows="3" placeholder="masukkan deskripsi keperluan permintaan kendaraan" class="mt-[4px] bg-white p-[12px] placeholder:text-placeholder rounded w-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold focus:border-gold"></textarea>
                         @error('keperluan')
                         <div class="invalid-feedback">
@@ -164,7 +143,7 @@
                             <label class="text-black font-medium text-[14px]">Tipe Perjalanan</label>
                             <div class="grid grid-cols-2 gap-4 w-full">
                                 <div class="flex items-center">
-                                    <input id="satu_arah" name="tipe_perjalanan" type="radio" class="mt-[4px] bg-white p-[12px] rounded w-fit focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold focus:border-gold">
+                                    <input id="satu_arah" name="tipe_perjalanan" type="radio" value="Sekali Jalan" class="mt-[4px] bg-white p-[12px] rounded w-fit focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold focus:border-gold">
                                     <label for="satu_arah" class="text-black font-medium text-[14px] ml-2">Sekali Jalan</label>
                                     @error('satu_arah')
                                     <div class="invalid-feedback">
@@ -173,7 +152,7 @@
                                     @enderror
                                 </div>
                                 <div class="flex items-center">
-                                    <input id="pulang_pergi" name="tipe_perjalanan" type="radio" class="mt-[4px] bg-white p-[12px] rounded w-fit focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold focus:border-gold">
+                                    <input id="pulang_pergi" name="tipe_perjalanan" type="radio" value="Pulang Pergi" class="mt-[4px] bg-white p-[12px] rounded w-fit focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold focus:border-gold">
                                     <label for="pulang_pergi" class="text-black font-medium text-[14px] ml-2">Pulang Pergi</label>
                                     @error('pulang_pergi')
                                     <div class="invalid-feedback">
@@ -234,6 +213,17 @@
                             {{ $message }}
                         </div>
                         @enderror
+                    </div>
+                    <div class="flex justify-between gap-4 w-full">
+                        <div class="flex flex-col w-full gap-1">
+                            <label for="pesan" class="text-black font-medium text-[14px]">Catatan Titik Jemput</label>
+                            <input id="pesan" name="pesan" type="text" placeholder="depan gedung 1" class="mt-[4px] bg-white p-[12px] placeholder:text-placeholder rounded w-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold focus:border-gold">
+                            @error('pesan')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
                     </div>
                 </div><br>
                 <button class="w-full rounded bg-gold text-white font-semibold p-3 hover:bg-[#B57F21] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white focus:border-white">Ajukan</button>

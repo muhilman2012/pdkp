@@ -11,8 +11,15 @@ class Dashboard extends Component
     use WithPagination;
     public $id_permintaan;
     public $search, $pages;
+    public $previousCount;
 
     protected $listeners = ["deleteAction" => "delete"];
+
+    public function mount()
+    {
+        $this->pages = 25;
+        $this->previousCount = permintaan::count();
+    }
 
     public function removed($id)
     {
@@ -25,15 +32,10 @@ class Dashboard extends Component
         $data = permintaan::find($this->id_permintaan);
         if ($data) {
             $data->delete();
-            $this->dispatchBrowserEvent('success', 'Data has been delete!');
+            $this->dispatchBrowserEvent('success', 'Data has been deleted!');
         } else {
-            $this->dispatchBrowserEvent('error', 'sorry something problem in database!');
+            $this->dispatchBrowserEvent('error', 'Sorry, there is a problem with the database!');
         }
-    }
-
-    public function mount()
-    {
-        $this->pages = 25;
     }
 
     public function render()
@@ -49,6 +51,12 @@ class Dashboard extends Component
 
         $data = $query->orderByRaw("FIELD(status, 'BARU', 'DIKONFIRMASI', 'DALAM PERJALANAN'), created_at DESC")
             ->paginate($this->pages);
+
+        $currentCount = permintaan::count();
+        if ($currentCount > $this->previousCount) {
+            $this->dispatch('newData');
+        }
+        $this->previousCount = $currentCount;
 
         return view('livewire.admin.permintaan.dashboard', ['data' => $data]);
     }

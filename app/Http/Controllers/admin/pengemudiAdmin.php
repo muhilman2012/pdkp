@@ -25,10 +25,10 @@ class pengemudiAdmin extends Controller
         $validator = Validator::make($request->all(), [
             'name'         => 'required',
             'nip'          => 'nullable',
+            'jabatan'      => 'nullable',
             'phone'        => 'required',
             'email'        => 'required|min:8|email|max:255',
-            'foto'       => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            // 'imagesMultiple.*'  => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'foto'         => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ], [
             'name.required'       => 'Harap isi Nama Pengemudi',
             'phone.required'      => 'Harap isi Nomor Pengemudi',
@@ -36,35 +36,43 @@ class pengemudiAdmin extends Controller
             'email.min'           => 'Oops sepertinya bukan email!',
             'email.email'         => 'Alamat email anda salah!',
             'email.max'           => 'Oops email melampaui batas!',
-            'foto.required'     => 'Please upload images',
-            'foto.image'        => 'File is not images',
-            'foto.mimes'        => 'File must be images',
-            'foto.max'          => 'File images oversized',
+            'foto.required'       => 'Please upload images',
+            'foto.image'          => 'File is not images',
+            'foto.mimes'          => 'File must be images',
+            'foto.max'            => 'File images oversized',
         ]);
-
+        
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         } else {
-            // images 
+            // Handle image upload
             $resorce = $request->foto;
             $pengemudiName = $request->input('name');
             $originNamaImages = $resorce->getClientOriginalName();
             $NewNameImage = "IMG-" . $pengemudiName;
             $namasamplefoto = $NewNameImage . "." . $resorce->getClientOriginalExtension();
-
+        
+            // Generate password
+            $cleanedName = str_replace(' ', '', $pengemudiName); // Remove spaces from name
+            $generatedPassword = 'SWP-' . $cleanedName;
+        
+            // Save data to database
             $data = new pengemudi();
-            $data->name = $request->name;
-            $data->nip  = $request->nip;
-            $data->phone= $request->phone;
-            $data->email= $request->email;
-            $data->foto = $namasamplefoto;
+            $data->name     = $request->name;
+            $data->nip      = $request->nip;
+            $data->jabatan  = $request->jabatan;
+            $data->phone    = $request->phone;
+            $data->email    = $request->email;
+            $data->foto     = $namasamplefoto;
+            $data->password = bcrypt($generatedPassword); // Encrypt the password
             $resorce->move(public_path() . "/images/pengemudi/", $namasamplefoto);
+        
             if ($data->save()) {
-                return redirect()->route('admin.pengemudi')->with('success', 'Data Pengemudi Berhasil Ditambah!');
+                return redirect()->route('admin.pengemudi')->with('success', 'Data Pengemudi Berhasil Ditambah dengan password : ' . $generatedPassword);
             } else {
-                return redirect()->back()->with('error', 'sorry database is busy try again letter');
+                return redirect()->back()->with('error', 'Maaf, database sedang sibuk. Coba lagi nanti.');
             }
-        }
+        }        
     }
 
     public function show($id)

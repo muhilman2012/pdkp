@@ -19,25 +19,22 @@ class pegawaiController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'waktu'                     => 'required',
             'keperluan'                 => 'required',
             'jenis_pengguna'            => 'required',
             'capacity'                  => 'required',
             'tipe_perjalanan'           => 'required',
             'jam_awal'                  => 'required',
-            'jam_akhir'                 => 'required',
+            'jam_akhir'                 => 'nullable',
             'date'                      => 'required',
             'tujuan_awal'               => 'required',
             'tujuan_akhir'              => 'required',
             'file'                      => 'nullable|mimes:pdf,doc,docx|max:5120', // validasi tipe file dan ukuran maksimum
         ], [
-            'waktu.required'            => 'Mohon pilih Waktu Permintaan',
             'keperluan.required'        => 'Mohon isi Deskripsi Keperluan Permintaan',
             'jenis_pengguna.required'   => 'Mohon pilih jenis pengguna',
             'capacity.required'         => 'Mohon isi Jumlah Penumpang',
             'tipe_perjalanan.required'  => 'Mohon pilih Tipe Perjalanan',
             'jam_awal.required'         => 'Mohon isi Jam Pengantaran',
-            'jam_akhir.required'        => 'Mohon isi Jam Penjemputan',
             'date.required'             => 'Mohon isi Tanggal Pengantaran',
             'tujuan_awal.required'      => 'Mohon isi Lokasi Awal Pengantaran',
             'tujuan_akhir.required'     => 'Mohon isi Lokasi Akhir Pengantaran',
@@ -56,10 +53,21 @@ class pegawaiController extends Controller
             $request->file('file')->storeAs('public/file/surat_tugas', $file_name);
         }
 
+        // Tentukan waktu berdasarkan jam_awal
+        $jam_awal = strtotime($request->jam_awal);
+        $jam_kerja_mulai = strtotime("07:30");
+        $jam_kerja_selesai = strtotime("16:00");
+
+        if ($jam_awal >= $jam_kerja_mulai && $jam_awal <= $jam_kerja_selesai) {
+            $waktu = 'Jam Kerja';
+        } else {
+            $waktu = 'Luar Jam Kerja / Lembur';
+        }
+
         // Inisialisasi data permintaan
         $data = new permintaan();
         $data->uuid             = substr((string) Str::uuid(), 0, 10); // Generate UUID with 10 characters
-        $data->waktu            = $request->waktu;
+        $data->waktu            = $waktu;
         $data->keperluan        = $request->keperluan;
         $data->capacity         = $request->capacity;
         $data->tipe_perjalanan  = $request->tipe_perjalanan;
@@ -69,6 +77,7 @@ class pegawaiController extends Controller
         $data->tujuan_awal      = $request->tujuan_awal;
         $data->tujuan_akhir     = $request->tujuan_akhir;
         $data->file             = $file_name;
+        $data->pesan            = $request->pesan; // Menyimpan pesan yang nullable
 
         // Periksa jenis pengguna
         if ($request->jenis_pengguna == 'sendiri') {

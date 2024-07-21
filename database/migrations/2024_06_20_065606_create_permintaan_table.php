@@ -30,6 +30,8 @@ return new class extends Migration
             $table->string('pengemudi')->nullable();
             $table->string('kendaraan')->nullable();
             $table->string('status');
+            $table->string('rating')->nullable();
+            $table->string('review')->nullable();
             $table->string('pesan')->nullable();
             $table->timestamps();
         });

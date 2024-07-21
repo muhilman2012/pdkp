@@ -24,7 +24,8 @@
                     <th scope="col">Pengguna</th>
                     <th scope="col">No Telepon</th>
                     <th scope="col">Tujuan</th>
-                    <th scope="col">Tanggal Permintaan</th>
+                    <th scope="col">Waktu Permintaan</th>
+                    <th scope="col">Waktu Update</th>
                     <th scope="col">Status</th>
                     <th scope="col">Action</th>
                 </tr>
@@ -38,7 +39,8 @@
                     <td>{{ $item->pengguna }}</td>
                     <td>{{ $item->phone }}</td>
                     <td>{{ $item->tujuan_akhir }}</td>
-                    <td>{{ $item->created_at->format('d-m-Y') }}</td>
+                    <td>{{ $item->created_at->format('d/m/Y H:i') }}</td>
+                    <td>{{ $item->updated_at->format('d/m/Y H:i') }}</td>
                     <td>
                     @if($item->status == 'BARU')
                         <span class="badge rounded-pill bg-danger px-3">BARU</span>
@@ -54,8 +56,7 @@
                         <a href="{{ route('admin.permintaan.edit', ['id' => $item->id_permintaan]) }}" class="btn btn-outline-secondary btn-sm">
                             <i class="fas fa-pencil-alt fa-sm fa-fw"></i>
                         </a>
-                        <button wire:click="removed({{ $item->id_permintaan }})" type="button"
-                            class="btn btn-outline-secondary btn-sm">
+                        <button wire:click="removed({{ $item->id_permintaan }})" type="button" class="btn btn-outline-secondary btn-sm">
                             <i class="fas fa-trash fa-sm fa-fw"></i>
                         </button>
                     </td>

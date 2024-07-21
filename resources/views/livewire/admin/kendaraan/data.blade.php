@@ -21,7 +21,7 @@
                     <th scope="col">#</th>
                     <th scope="col">Foto</th>
                     <th scope="col">Nama kendaraan</th>
-                    <th scope="col">Phone</th>
+                    <th scope="col">Nopol</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
@@ -33,12 +33,12 @@
                         <img src="{{ url('/images/kendaraan/' . $item->foto ) }}" class="rounded" width="100px">
                     </td>
                     <td>{{ $item->name }}</td>
-                    <td>{{ $item->phone }}</td>
+                    <td>{{ $item->nopol }}</td>
                     <td class="text-nowrap">
                         <a href="" class="btn btn-outline-secondary btn-sm">
                             <i class="fas fa-pencil-alt fa-sm fa-fw"></i>
                         </a>
-                        <button wire:click="removed({{ $item->id_users }})" type="button"
+                        <button wire:click="removed({{ $item->id }})" type="button"
                             class="btn btn-outline-secondary btn-sm">
                             <i class="fas fa-trash fa-sm fa-fw"></i>
                         </button>
@@ -72,17 +72,17 @@
         document.addEventListener('deleteConfrimed', function() {
             Swal.fire({
                     title: "Hapus?",
-                    text: "Apa Kamu yakin menghapus berita ini?",
+                    text: "Apa Anda yakin ingin menghapus data kendaraan ini?",
                     icon: "warning",
                     showCancelButton: true,
-                    confirmButtonText: 'Yes, delete!',
+                    confirmButtonText: 'Ya, Hapus!',
                     cancelButtonText: 'Tidak',
                 })
                 .then((next) => {
                     if (next.isConfirmed) {
                         Livewire.emit('deleteAction');
                     } else {
-                        Swal.fire("Your news is save!");
+                        Swal.fire("Data Kendaraan tetap Aman!");
                     }
                 });
         })

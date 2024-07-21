@@ -54,7 +54,8 @@ class usersAdmin extends Controller
             $resorce = $request->foto;
             $extension = $resorce->getClientOriginalExtension();
             $requestName = $request->input('name'); // Mengambil nama dari request
-            $NewNameImage = "IMG-" . $requestName;
+            $cleanedName = str_replace(' ', '', $requestName); // Menghapus spasi dari nama
+            $NewNameImage = "IMG-" . $cleanedName;
             $namasamplefoto = $NewNameImage . "." . $extension;
         
             $data = new User();
@@ -64,8 +65,8 @@ class usersAdmin extends Controller
             $data->email = $request->email;
             $data->unit_kerja = $request->unit_kerja;
         
-            // Membuat password otomatis dengan format SWP-name
-            $autoPassword = "SWP-" . $requestName;
+            // Membuat password otomatis dengan format SWP-name tanpa spasi
+            $autoPassword = "SWP-" . $cleanedName;
             $data->password = bcrypt($autoPassword);
         
             $data->foto = $namasamplefoto;
@@ -76,7 +77,7 @@ class usersAdmin extends Controller
             } else {
                 return redirect()->back()->with('error', 'Sorry, the database is busy. Please try again later.');
             }
-        }        
+        }              
     }
 
     public function show($id)

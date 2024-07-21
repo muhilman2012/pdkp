@@ -104,66 +104,45 @@ class permintaanAdmin extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'title'        => 'required',
-            'description'  => 'required',
-            'content'      => 'required',
-            // 'imagesMultiple.*'  => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'pengemudi'                 => 'required',
+            'kendaraan'                 => 'required',
+            'status'                    => 'required',
         ], [
-            'title.required'        => 'Please input field title permintaan',
-            'description.required'  => 'Please input field description users',
-            'content.required'      => 'Please input field content users',
+            
+            'pengemudi_id.required'     => 'Mohon pilih pengemudi',
+            'kendaraan_id.required'     => 'Mohon pilih kendaraan',
+            'status.required'           => 'Mohon pilih status',
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $file_name = null;
+        if ($request->hasFile('file')) {
+            // Simpan file PDF ke dalam folder surat tugas jika diunggah
+            $file_name = $request->file('file')->getClientOriginalName();
+            $request->file('file')->storeAs('public/file/surat_tugas', $file_name);
+        }
+
+        // Cari data permintaan berdasarkan ID
+        $data = permintaan::find($id);
+        if (!$data) {
+            return redirect()->back()->with('error', 'Data tidak ditemukan');
+        }
+
+        // Update data permintaan
+        $data->pengemudi        = $request->pengemudi;
+        $data->kendaraan        = $request->kendaraan;
+        $data->status           = $request->status;
+        if ($file_name) {
+            $data->file         = $file_name;
+        }
+
+        if ($data->save()) {
+            return redirect()->route('admin.permintaan')->with('success', 'Permintaan berhasil diperbarui');
         } else {
-            // slug from title
-            $slug = Str::slug($request->title);
-            // schedule
-            $schedule = $request->dates . ' ' . date('H:i:s', strtotime($request->times));
-            if ($request->images) {
-                $validImages = Validator::make($request->all(), [
-                    'images'       => 'image|mimes:jpeg,png,jpg,gif,svg|max:4512',
-                ], [
-                    'images.image'          => 'File is not images',
-                    'images.mimes'          => 'File must be images',
-                    'images.max'            => 'File images oversized',
-                ]);
-                if ($validImages->fails()) {
-                    return redirect()->back()->withErrors($validImages)->withInput();
-                } else {
-                    // images 
-                    $resorce = $request->images;
-                    $originNamaImages = $resorce->getClientOriginalName();
-                    $NewNameImage = "IMG-" . substr(md5($originNamaImages . date("YmdHis")), 0, 14);
-                    $namasamplefoto = $NewNameImage . "." . $resorce->getClientOriginalExtension();
-                    // update with images
-                    $data = User::find($id);
-                    $data->title = $request->title;
-                    $data->slug = $slug;
-                    $data->description = $request->description;
-                    $data->content = $request->content;
-                    $data->images = $namasamplefoto;
-                    $resorce->move(public_path() . "/images/users/", $namasamplefoto);
-                    if ($data->save()) {
-                        return redirect()->route('admin.users')->with('success', 'users data saved successfully');
-                    } else {
-                        return redirect()->back()->with('error', 'sorry database is busy try again letter');
-                    }
-                }
-            } else {
-                // update no images
-                $data = permintaan::find($id);
-                $data->title = $request->title;
-                $data->slug = $slug;
-                $data->description = $request->description;
-                $data->content = $request->content;
-                if ($data->save()) {
-                    return redirect()->route('admin.users')->with('success', 'users data saved successfully');
-                } else {
-                    return redirect()->back()->with('error', 'sorry database is busy try again letter');
-                }
-            }
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat memperbarui permintaan');
         }
     }
 }

@@ -39,11 +39,7 @@
                     </div>
                     <div class="col-md-4">
                         <label for="waktu" class="form-label">Waktu</label>
-                        <select name="waktu" class="form-control @error('waktu') is-invalid @enderror" disabled>
-                            <option value="">Pilih Waktu</option>
-                            <option value="Jam Kerja" {{ $data->waktu == 'Jam Kerja' ? 'selected' : '' }}>Jam Kerja</option>
-                            <option value="Luar Jam Kerja / Lembur" {{ $data->waktu == 'Luar Jam Kerja' ? 'selected' : '' }}>Luar Jam Kerja</option>
-                        </select>
+                        <input type="text" name="waktu" id="waktu" class="form-control @error('waktu') is-invalid @enderror" value="{{ $data->waktu }}" disabled>
                         @error('waktu')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -96,7 +92,7 @@
                 <div class="mb-3 row">
                     <div class="col-md-4">
                         <label for="date" class="form-label">Tanggal</label>
-                        <input type="date" name="date" id="date" class="form-control @error('date') is-invalid @enderror" value="{{ $data->date }}" disabled>
+                        <input type="date" name="date" id="date" class="form-control @error('date') is-invalid @enderror" value="{{ $data->date }}" readonly>
                         @error('date')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -105,7 +101,7 @@
                     </div>
                     <div class="col-md-4">
                         <label for="jam_awal" class="form-label">Jam Pengantaran</label>
-                        <input type="time" name="jam_awal" id="jam_awal" class="form-control @error('jam_awal') is-invalid @enderror" value="{{ $data->jam_awal }}" disabled>
+                        <input type="time" name="jam_awal" id="jam_awal" class="form-control @error('jam_awal') is-invalid @enderror" value="{{ $data->jam_awal }}" readonly>
                         @error('jam_awal')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -114,7 +110,7 @@
                     </div>
                     <div class="col-md-4">
                         <label for="jam_akhir" class="form-label">Jam Penjemputan</label>
-                        <input type="time" name="jam_akhir" id="jam_akhir" class="form-control @error('jam_akhir') is-invalid @enderror" value="{{ $data->jam_akhir }}" disabled>
+                        <input type="time" name="jam_akhir" id="jam_akhir" class="form-control @error('jam_akhir') is-invalid @enderror" value="{{ $data->jam_akhir }}" readonly>
                         @error('jam_akhir')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -144,7 +140,7 @@
                     <div class="col-md-4">
                         <label for="file" class="form-label">Surat Tugas yang Diupload</label><br>
                         @if($data->file)
-                            <a href="{{ asset('public/file/surat_tugas' . $data->file) }}" target="_blank">{{ $data->file }}</a>
+                            <a href="{{ asset('/storage/file/surat_tugas/' . $data->file) }}" target="_blank">{{ $data->file }}</a>
                         @else
                             <span>Tidak ada file yang diupload</span>
                         @endif
@@ -156,7 +152,7 @@
                         <select name="pengemudi" id="pengemudi" class="form-control @error('pengemudi') is-invalid @enderror">
                             <option value="">Pilih Pengemudi</option>
                             @foreach($pengemudi as $item)
-                                <option value="{{ $item->id }}" {{ $data->pengemudi_id == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
+                                <option value="{{ $item->name }}" {{ $data->pengemudi_id == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
                             @endforeach
                         </select>
                         @error('pengemudi')
@@ -170,7 +166,7 @@
                         <select name="kendaraan" id="kendaraan" class="form-control @error('kendaraan') is-invalid @enderror">
                             <option value="">Pilih Kendaraan</option>
                             @foreach($kendaraan as $item)
-                                <option value="{{ $item->id }}" {{ $data->kendaraan_id == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
+                                <option value="{{ $item->name }}" {{ $data->kendaraan_id == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
                             @endforeach
                         </select>
                         @error('kendaraan')
@@ -229,4 +225,21 @@
         filebrowserUploadMethod: 'form'
     });
 </script>
+@if(session()->has('success'))
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil',
+            text: '{{ session()->get("success") }}',
+        })
+    </script>
+    @elseif(session()->has('error'))
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Maaf',
+            text: '{{ session()->get("error") }}',
+        })
+    </script>
+    @endif
 @endsection

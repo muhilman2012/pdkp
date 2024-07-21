@@ -16,8 +16,11 @@ return new class extends Migration
             $table->string('name');
             $table->string('nip')->nullable();
             $table->string('phone');
-            $table->string('email');
             $table->string('foto');
+            $table->string('jabatan');
+            $table->string('email');
+            $table->string('password');
+            $table->rememberToken();
             $table->timestamps();
         });
     }

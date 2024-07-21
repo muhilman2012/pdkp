@@ -16,7 +16,7 @@ class Data extends Component
 
     public function removed($id){
         $this->id_kendaraan = $id;
-        $this->dispatchBrowserEvent('deleteConfrimed');
+        $this->dispatch('deleteConfrimed');
     }
 
     public function delete()
@@ -24,9 +24,9 @@ class Data extends Component
         $data = kendaraan::find($this->id_kendaraan);
         if ($data) {
             $data->delete();
-            $this->dispatchBrowserEvent('success', 'Data has been delete!');
+            $this->dispatch('success', 'Data has been delete!');
         } else {
-            $this->dispatchBrowserEvent('error', 'sorry something problem in database!');
+            $this->dispatch('error', 'sorry something problem in database!');
         }
     }
 

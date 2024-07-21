@@ -24,7 +24,6 @@ class UserSeeder extends Seeder
             if ($divisi) {
                 User::create([
                     'name'       => 'Demo',
-                    'nip'        => '1234567890987654321',
                     'phone'      => '081234567890',
                     'unit_kerja' => $data['id_divisi'], // Menggunakan id_divisi dari data divisi
                     'email'      => 'demo@gmail.com',

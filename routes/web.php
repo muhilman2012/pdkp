@@ -34,6 +34,8 @@ Route::get('/', [authUser::class, 'index'])->name('pages.index');
 Route::post('/store', [authUser::class, 'login'])->name('pages.index.store');
 Route::group(['middleware' => 'auth:web'], function () {
     Route::get('/dashboard', [indexController::class, 'dashboard'])->middleware('auth')->name('pages.dashboard');
+    Route::get('/detail/{id_permintaan}', [indexController::class, 'detail'])->middleware('auth')->name('pages.detail');
+    Route::post('/detail/{id_permintaan}/review', [IndexController::class, 'storeReview'])->middleware('auth')->name('permintaan.review.store');
     Route::get('/layanan', [indexController::class, 'layanan'])->name('pages.layanan');
     Route::get('/layanan/pegawai', [pegawaiController::class, 'index'])->name('layanan.pegawai');
     Route::post('/layanan/pegawai/store', [pegawaiController::class, 'store'])->name('layanan.pegawai.store');
@@ -86,6 +88,8 @@ Route::group(['prefix' => 'admin',  'middleware' => 'auth:admin'], function () {
     Route::put('/dashboard/permintaan/perbarui/{id}', [permintaanAdmin::class, 'update'])->name('admin.permintaan.update');
     Route::put('/dashboard/permintaan/detail/{id}', [permintaanAdmin::class, 'show'])->name('admin.permintaan.detail');
     Route::get('/dashboard/permintaan/upload/editore', [permintaanAdmin::class, 'editor'])->name('admin.permintaan.upload.editor');
+    Route::get('/dashboard/permintaan/reports', [indexAdmin::class, 'permintaanReport'])->name('admin.reports.permintaan');
+    Route::get('/dashboard/permintaan/reports/permintaan/export', [indexAdmin::class, 'exportPermintaanToCSV'])->name('admin.reports.permintaan.export');
 
     Route::get('/logout', [indexAdmin::class, 'logout'])->name('admin.logout');
 });

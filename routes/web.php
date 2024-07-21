@@ -17,6 +17,7 @@ use App\Http\Controllers\pages\layananController;
 use App\Http\Controllers\pages\permintaan\pegawaiController;
 use App\Http\Controllers\auth\authUser;
 use App\Http\Controllers\pages\profileUser;
+use App\Http\Controllers\PengemudiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,8 +42,16 @@ Route::group(['middleware' => 'auth:web'], function () {
     Route::post('/layanan/pegawai/store', [pegawaiController::class, 'store'])->name('layanan.pegawai.store');
     // profile routeing
     Route::get('/profile', [profileUser::class, 'index'])->name('pages.profile');
+    Route::get('/logout', [authUser::class, 'logout'])->name('logout');
 
-    Route::get('/logout', [indexController::class, 'logout'])->name('logout');
+});
+
+// route pengemudi
+Route::group(['middleware' => 'auth:pengemudi'], function () {
+    Route::get('/dashboard/pengemudi', [PengemudiController::class, 'index'])->name('pengemudi.dashboard');
+    Route::get('/permintaan/{id}/detail', [PengemudiController::class, 'show'])->name('pengemudi.permintaan.detail');
+    Route::post('/permintaan/{id}/update-status', [PengemudiController::class, 'updateStatus'])->name('pengemudi.permintaan.updateStatus');
+    Route::get('/logout', [authUser::class, 'logout'])->name('logout');
 });
 
 //route admin

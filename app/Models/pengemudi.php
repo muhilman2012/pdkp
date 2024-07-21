@@ -4,8 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class pengemudi extends Model
+class pengemudi extends Authenticatable
 {
     use HasFactory;
 
@@ -19,5 +20,9 @@ class pengemudi extends Model
         'phone',
         'email',
         'foto',
+    ];
+
+    protected $hidden = [
+        'password', 'remember_token',
     ];
 }

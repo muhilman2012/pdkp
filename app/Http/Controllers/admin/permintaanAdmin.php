@@ -104,7 +104,7 @@ class permintaanAdmin extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'pengemudi'                 => 'required',
+            'pengemudi_id'              => 'required',
             'kendaraan'                 => 'required',
             'status'                    => 'required',
         ], [
@@ -132,7 +132,7 @@ class permintaanAdmin extends Controller
         }
 
         // Update data permintaan
-        $data->pengemudi        = $request->pengemudi;
+        $data->pengemudi_id     = $request->pengemudi_id;
         $data->kendaraan        = $request->kendaraan;
         $data->status           = $request->status;
         if ($file_name) {

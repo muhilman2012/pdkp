@@ -149,13 +149,13 @@
                 <div class="mb-3 row">
                     <div class="col-md-4">
                         <label for="pengemudi" class="form-label">Pengemudi</label>
-                        <select name="pengemudi" id="pengemudi" class="form-control @error('pengemudi') is-invalid @enderror">
+                        <select name="pengemudi_id" id="pengemudi" class="form-control @error('pengemudi_id') is-invalid @enderror">
                             <option value="">Pilih Pengemudi</option>
                             @foreach($pengemudi as $item)
-                                <option value="{{ $item->name }}" {{ $data->pengemudi_id == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
+                                <option value="{{ $item->id }}" {{ $data->pengemudi_id == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
                             @endforeach
                         </select>
-                        @error('pengemudi')
+                        @error('pengemudi_id')
                         <div class="invalid-feedback">
                             {{ $message }}
                         </div>

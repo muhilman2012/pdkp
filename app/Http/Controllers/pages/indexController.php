@@ -63,11 +63,4 @@ class indexController extends Controller
         return redirect()->route('pages.dashboard', ['id_permintaan' => $id_permintaan])->with('success', 'Terimakasih telah memberikan Review');
     }
 
-    public function logout()
-    {
-        if(Auth::guard('web')->check()){
-            Auth::guard('web')->logout();
-            return redirect('/');
-        }
-    }
 }

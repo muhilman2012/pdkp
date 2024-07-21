@@ -44,7 +44,7 @@ class Permintaan extends Model
         'tujuan_awal',
         'tujuan_akhir',
         'status',
-        'pengemudi',
+        'pengemudi_id',
         'kendaraan',
         'file',
     ];
@@ -59,5 +59,10 @@ class Permintaan extends Model
                 $model->{$model->getKeyName()} = (string) Str::uuid();
             }
         });
+    }
+
+    public function pengemudi()
+    {
+        return $this->belongsTo(pengemudi::class, 'pengemudi_id');
     }
 }

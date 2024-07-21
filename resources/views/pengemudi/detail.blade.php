@@ -8,11 +8,10 @@
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.24/dist/full.min.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet" type="text/css" />
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
-
+    <script src="//unpkg.com/alpinejs" defer></script>
     <style>
         :root {
             font-family: 'Inter', sans-serif;
@@ -63,14 +62,13 @@
 </head>
 
 <body>
-    <section
-        class="flex flex-col justify-start px-4 mx-auto bg-white max-w-md pt-5 pb-10 h-screen text-black bg-center bg-cover bg-[url('/assets/images/bg-main.png')]">
+    <section class="flex flex-col justify-start px-4 mx-auto bg-white max-w-md pt-5 pb-10 h-screen text-black bg-center bg-cover bg-[url('/assets/images/bg-main.png')]">
         <div class="flex justify-between">
-            <img class="w-12" src="{{ asset('/assets/logo/logo-sekwapres.svg') }}" alt="logo setwapres">
-            <img class="w-4/12 h-fit" src="{{ asset('/assets/logo/logo-pdkp-gold.png') }}" alt="logo pdkp">
+            <img class="w-12" src="{{ url ('/assets/logo/logo-sekwapres.svg') }}" alt="Logo SETWAPRES">
+            <img class="w-4/12 h-fit" src="{{ url ('/assets/logo/logo-pdkp-gold.png') }}" alt="Logo PDKP">
         </div>
         <div class="flex mt-5 items-center justify-center gap-2 w-full">
-            <a href="{{ route('pages.dashboard') }}">
+            <a href="{{ route('pengemudi.dashboard') }}">
                 <ion-icon name="chevron-back-circle-outline" class="text-gold h-10 w-10"></ion-icon>
             </a>
             <p class="font-bold text-lg leading-5 w-full">Detail Permintaan</p>
@@ -102,8 +100,7 @@
                         </div>
                         <div class="col-span-1">:</div>
                         <div class="col-span-6">
-                            <p class="font-semibold text-sm text-left leading-5">{{ $permintaan->pengemudi->name }}</p>
-                            <a class="text-blue-500 underline" href="https://wa.me/{{ $permintaan->pengemudi->phone }}" target="_blank">{{ $permintaan->pengemudi->phone }}</a>
+                            <p class="font-semibold text-sm text-left leading-5">{{ $permintaan->pengemudi }}</p>
                         </div>
                     </div>
                 </div>
@@ -134,89 +131,8 @@
                     @endif
                 </div>
             </div>
-
-            @if($permintaan->status == 'SELESAI')
-                <div class="flex flex-col gap-2">
-                    <p class="font-semibold text-regular underline">Review</p>
-                    @if($permintaan->review && $permintaan->rating)
-                        <div class="flex flex-col gap-2">
-                            <textarea class="mt-[4px] bg-white p-[12px] placeholder:text-placeholder rounded w-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold focus:border-gold" name="review"  rows="4" disabled>{{ $permintaan->review }}</textarea>
-                            <div class="flex gap-1">
-                                @for($i = 1; $i <= 5; $i++)
-                                    @if($i <= $permintaan->rating)
-                                        <ion-icon class="text-gold w-5 h-5" name="star"></ion-icon>
-                                    @else
-                                        <ion-icon class="text-gold w-5 h-5" name="star-outline"></ion-icon>
-                                    @endif
-                                @endfor
-                            </div>
-                        </div>
-                    @else
-                        <form action="{{ route('permintaan.review.store', ['id_permintaan' => $permintaan->id_permintaan]) }}" method="POST">
-                            @csrf
-                            <textarea class="mt-[4px] bg-white p-[12px] placeholder:text-placeholder rounded w-full focus:outline-none
-                            focus:ring-2 focus:ring-offset-2 focus:ring-gold focus:border-gold" name="review" placeholder="beri review untuk pelayanan dan pengemudi" rows="4"></textarea>
-                            <div class="flex gap-1 mt-2">
-                                <ion-icon class="text-gold w-5 h-5" name="star-outline" data-value="1"></ion-icon>
-                                <ion-icon class="text-gold w-5 h-5" name="star-outline" data-value="2"></ion-icon>
-                                <ion-icon class="text-gold w-5 h-5" name="star-outline" data-value="3"></ion-icon>
-                                <ion-icon class="text-gold w-5 h-5" name="star-outline" data-value="4"></ion-icon>
-                                <ion-icon class="text-gold w-5 h-5" name="star-outline" data-value="5"></ion-icon>
-                            </div>
-                            <input type="hidden" name="rating" id="rating" value="0">
-                            <button type="submit" class="mt-4 bg-primary text-white py-2 px-4 rounded">Kirim Review</button>
-                        </form>
-                    @endif
-                </div>
-            @endif
         </div>
     </section>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', (event) => {
-            const stars = document.querySelectorAll('ion-icon');
-            const ratingInput = document.getElementById('rating');
-
-            stars.forEach(star => {
-                star.addEventListener('click', (e) => {
-                    const value = e.target.getAttribute('data-value');
-                    ratingInput.value = value; // Set nilai rating ke input tersembunyi
-                    updateStars(value);
-                    console.log(`Rating: ${value}`);
-                });
-            });
-        });
-
-        function updateStars(value) {
-            const stars = document.querySelectorAll('ion-icon');
-            stars.forEach(star => {
-                if (star.getAttribute('data-value') <= value) {
-                    star.setAttribute('name', 'star');
-                } else {
-                    star.setAttribute('name', 'star-outline');
-                }
-            });
-        }
-    </script>
-    <script src="{{ url('/assets/app/js/app.js') }}"></script>
-    <script src="{{ url('/assets/dist/js/alert.js') }}"></script>
-    @if(session()->has('success'))
-    <script>
-        Swal.fire({
-            icon: 'success',
-            title: 'Berhasil',
-            text: '{{ session()->get("success") }}',
-        })
-    </script>
-    @elseif(session()->has('error'))
-    <script>
-        Swal.fire({
-            icon: 'error',
-            title: 'Maaf',
-            text: '{{ session()->get("error") }}',
-        })
-    </script>
-    @endif
 </body>
 
 </html>

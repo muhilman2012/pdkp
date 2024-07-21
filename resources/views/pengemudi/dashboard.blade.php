@@ -4,11 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="{{asset('/assets/logo/logo-sekwapres.svg')}}" type="image/svg">
+    <link rel="icon" href="{{ asset('/assets/logo/logo-sekwapres.svg') }}" type="image/svg">
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.24/dist/full.min.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"
-        type="text/css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet" type="text/css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
@@ -59,7 +58,7 @@
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
-    <title>Dashboard - PDKP - Pelayanan Dukungan Kendaraan & Pengemudi</title>
+    <title>Dashboard Pengemudi - PDKP</title>
 </head>
 
 <body>
@@ -75,16 +74,6 @@
             </div>
             <a href="{{ route('logout') }}">
                 <ion-icon name="exit" class="w-8 h-8 text-danger"></ion-icon>
-            </a>
-        </div>
-        <div class="flex justify-between gap-4 text-white mt-5">
-            <a href="{{ route('pages.layanan') }}" class="flex flex-col justify-between items-end bg-gold w-full gap-3 p-3 rounded-lg">
-                <ion-icon name="git-pull-request-outline" class="w-6 h-6"></ion-icon>
-                <p class="font-medium text-sm text-left w-full">Permintaan Layanan Dukungan</p>
-            </a>
-            <a href="{{ route('pages.profile') }}" class="flex flex-col justify-start items-end bg-silver w-full gap-3 p-3 rounded-lg">
-                <ion-icon name="person-circle" class="w-6 h-6"></ion-icon>
-                <p class="font-medium text-sm text-left w-full">Profil<br /> Pengguna</p>
             </a>
         </div>
         <div class="text-black flex flex-col mt-5">
@@ -103,7 +92,7 @@
                             $bgColor = 'bg-success';
                         }
                     @endphp
-                    <a href="{{ route('pages.detail', ['id_permintaan' => $item->id_permintaan]) }}" class="flex bg-white p-3 rounded-lg shadow-md gap-3 items-start w-full">
+                    <div class="flex bg-white p-3 rounded-lg shadow-md gap-3 items-start w-full">
                         <div x-data x-init="$nextTick(() => { document.querySelectorAll('ion-icon').forEach(icon => { const newIcon = document.createElement('ion-icon'); newIcon.setAttribute('name', icon.getAttribute('name')); newIcon.className = icon.className; icon.replaceWith(newIcon); }); })">
                             @if($item->layanan == 'Wapres')
                                 <ion-icon name="star" class="text-gold h-6 w-6"></ion-icon>
@@ -130,8 +119,21 @@
                                 <p>{{ $item->pengemudi->name }} , {{ $item->kendaraan }}</p>
                                 <p>ID Permintaan : {{ $item->uuid }}</p>
                             </div>
+                            @if($item->status == 'DIKONFIRMASI')
+                                <form action="{{ route('pengemudi.permintaan.updateStatus', $item->id_permintaan) }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="status" value="DALAM PERJALANAN">
+                                    <button type="submit" class="mt-2 bg-blue text-white py-1 px-3 rounded">Mulai Perjalanan</button>
+                                </form>
+                            @elseif($item->status == 'DALAM PERJALANAN')
+                                <form action="{{ route('pengemudi.permintaan.updateStatus', $item->id_permintaan) }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="status" value="SELESAI">
+                                    <button type="submit" class="mt-2 bg-success text-white py-1 px-3 rounded">Selesaikan Perjalanan</button>
+                                </form>
+                            @endif
                         </div>
-                    </a>
+                    </div>
                 @endforeach
             </div>
         </div>
@@ -160,7 +162,7 @@
             }
 
             // Dapatkan nama pengguna dari server-side
-            const userName = @json(auth('web')->user()->name);
+            const userName = @json(auth('pengemudi')->user()->name);
 
             // Gabungkan ucapan dengan nama pengguna
             greetingElement.innerHTML = `${greetingMessage}, ${userName}`;

@@ -52,11 +52,11 @@ class Dashboard extends Component
         $data = $query->orderByRaw("FIELD(status, 'BARU', 'DIKONFIRMASI', 'DALAM PERJALANAN'), created_at DESC")
             ->paginate($this->pages);
 
-        $currentCount = permintaan::count();
-        if ($currentCount > $this->previousCount) {
+        // Cek apakah ada permintaan baru
+        $newRequests = permintaan::where('status', 'BARU')->count();
+        if ($newRequests > 0) {
             $this->dispatch('newData');
         }
-        $this->previousCount = $currentCount;
 
         return view('livewire.admin.permintaan.dashboard', ['data' => $data]);
     }

@@ -14,6 +14,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected $table = 'users';
     /**
      * The attributes that are mass assignable.
      *
@@ -51,5 +52,10 @@ class User extends Authenticatable
     public function divisi()
     {
         return $this->belongsTo(divisi::class, 'unit_kerja');
+    }
+
+    public function permintaan()
+    {
+        return $this->hasMany(permintaan::class, 'user_id');
     }
 }

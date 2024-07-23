@@ -9,11 +9,11 @@ use App\Models\permintaan;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
-class pegawaiController extends Controller
+class eselonController extends Controller
 {
     public function index()
     {
-        return view('layanan.pegawai');
+        return view('layanan.eselon');
     }
 
     public function store(Request $request)
@@ -108,7 +108,7 @@ class pegawaiController extends Controller
 
         // Tambahkan data default
         $data->status           = 'BARU';  // status layanan terbaru
-        $data->layanan          = 'Pegawai';  // default layanan pegawai
+        $data->layanan          = 'Eselon';  // default layanan Eselon
 
         if ($data->save()) {
             return redirect()->route('pages.dashboard')->with('success', 'Permintaan Kendaraan Berhasil');

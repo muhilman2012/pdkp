@@ -102,8 +102,12 @@
                         </div>
                         <div class="col-span-1">:</div>
                         <div class="col-span-6">
-                            <p class="font-semibold text-sm text-left leading-5">{{ $permintaan->pengemudi->name }}</p>
-                            <a class="text-blue-500 underline" href="https://wa.me/{{ $permintaan->pengemudi->phone }}" target="_blank">{{ $permintaan->pengemudi->phone }}</a>
+                            @if ($permintaan->pengemudi)
+                                <p class="font-semibold text-sm text-left leading-5">{{ $permintaan->pengemudi->name }}</p>
+                                <a class="text-blue-500 underline" href="https://wa.me/62{{ $permintaan->pengemudi->phone }}" target="_blank">{{ $permintaan->pengemudi->phone }}</a>
+                            @else
+                                <p class="font-semibold text-sm text-left leading-5">Belum dikonfirmasi</p>
+                            @endif
                         </div>
                     </div>
                 </div>

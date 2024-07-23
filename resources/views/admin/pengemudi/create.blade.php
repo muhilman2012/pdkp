@@ -18,72 +18,75 @@
         <p class="mb-0 text-secondary">Halaman Tambah Pengemudi Baru</p>
     </div>
     <div class="d-block rounded bg-white shadow mb-3">
-        <div class="d-block p-3">
-            <form action="{{ route('admin.pengemudi.create.store') }}" method="post" enctype="multipart/form-data">
+        <div class="d-block p-5">
+            <form class="add-form" action="{{ route('admin.pengemudi.create.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 @method('post')
-                <div class="mb-3">
-                    <label for="foto" class="form-label">Foto Pengemudi</label>
-                    <input type="file" name="foto" id="foto"
-                        class="form-control @error('foto') is-invalid @enderror">
-                    @error('foto')
-                    <div class="invalid-feedback">
-                        {{ $message }}
+                <div class="row">
+                    <div class=" mb-3 align-items-center row">
+                        <div class="col-4"><label for="foto" class="form-label me-3">Foto Pengemudi</label></div>
+                        <div class="col-8"><input class="form-control @error('foto') is-invalid @enderror" type="file" name="foto" id="foto"></div>
+                        @error('foto')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
                     </div>
-                    @enderror
-                </div>
-                <div class="mb-3">
-                    <label for="name" class="form-label">Nama Pengemudi</label>
-                    <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
-                        value="{{ old('name') }}">
-                    @error('name')
-                    <div class="invalid-feedback">
-                        {{ $message }}
+                    <div class=" mb-3 align-items-center row">
+                        <div class="col-4"><label for="name" class="form-label staff-name me-3">Nama Pengemudi</label></div>
+                        <div class="col-8"><input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}"></div>
+                        @error('name')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                        
                     </div>
-                    @enderror
-                </div>
-                <div class="mb-3">
-                    <label for="nip" class="form-label">NIP Pengemudi</label>
-                    <input type="text" name="nip" class="form-control @error('nip') is-invalid @enderror"
-                        value="{{ old('nip') }}">
-                    @error('nip')
-                    <div class="invalid-feedback">
-                        {{ $message }}
+                    <div class=" mb-3 align-items-center row">
+                        <div class="col-4"><label for="nip" class="form-label staff-nip me-3">NIP Pengemudi</label></div>
+                        <div class="col-8"><input type="text" name="nip" id="nip"  class="form-control @error('nip') is-invalid @enderror" value="{{ old('nip') }}"></div>
+                        @error('nip')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
                     </div>
-                    @enderror
-                </div>
-                <div class="mb-3">
-                    <label for="jabatan" class="form-label">Jabatan Pengemudi</label>
-                    <input type="text" name="jabatan" class="form-control @error('jabatan') is-invalid @enderror"
-                        value="{{ old('jabatan') }}">
-                    @error('jabatan')
-                    <div class="invalid-feedback">
-                        {{ $message }}
+                    <div class=" mb-3 align-items-center row">
+                        <div class="col-4"><label for="jabatan" class="form-label">Jabatan Pengemudi</label></div>
+                        <div class="col-8"><input type="text" name="jabatan" class="form-control @error('jabatan') is-invalid @enderror"
+                        value="{{ old('jabatan') }}"></div>
+                        @error('jabatan')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                    </div>  
+                    
+                    <div class=" mb-3 align-items-center row">
+                        <div class="col-4"><label for="phone" class="form-label staff-position me-3">Nomor Telepon/WhatsApp</label></div>
+                        <div class="col-8"><input type="text" name="phone" id="phone" class="form-control @error('phone') is-invalid @enderror"></div>
+                        @error('phone')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                        
                     </div>
-                    @enderror
-                </div>
-                <div class="mb-3">
-                    <label for="phone" class="form-label">No Telepon / Whatsapp Pengemudi</label>
-                    <input type="text" name="phone" class="form-control @error('phone') is-invalid @enderror"
-                        value="{{ old('phone') }}">
-                    @error('phone')
-                    <div class="invalid-feedback">
-                        {{ $message }}
+                    
+                    <div class=" mb-3 align-items-center row">
+                        <div class="col-4"><label for="email" class="form-label staff-subsection me-3">Email</label></div>
+                        <div class="col-8"><input type="email" name="email" id="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}">
+                        @error('email')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
                     </div>
-                    @enderror
                 </div>
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email Pengemudi</label>
-                    <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
-                        value="{{ old('email') }}">
-                    @error('email')
-                    <div class="invalid-feedback">
-                        {{ $message }}
+                <div class="row">
+                    <div class="my-4 mx-auto form-btn" style="width:200px;">
+                        <button type="submit" class="btn btn-primary form-control ">Save</button>
                     </div>
-                    @enderror
-                </div>
-                <div class="mb-3">
-                    <button type="submit" class="btn btn-primary form-control">Save</button>
                 </div>
             </form>
         </div>

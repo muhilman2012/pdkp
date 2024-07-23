@@ -127,7 +127,14 @@
                             </div>
                             <p class="font-semibold text-sm line-clamp-3">{{ $item->keperluan }}</p>
                             <div class="flex justify-between items-center italic text-black text-xs">
-                                <p>{{ $item->pengemudi->name }} , {{ $item->kendaraan }}</p>
+                                <p>
+                                    @if($item->pengemudi)
+                                        {{ $item->pengemudi->name }}
+                                    @else
+                                        belum dikonfirmasi
+                                    @endif
+                                    , {{ $item->kendaraan }}
+                                </p>
                                 <p>ID Permintaan : {{ $item->uuid }}</p>
                             </div>
                         </div>

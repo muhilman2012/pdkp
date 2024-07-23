@@ -170,6 +170,7 @@
     @yield('script')
 
     @if(session()->has('success'))
+
     <script>
         Swal.fire({
             icon: 'success',

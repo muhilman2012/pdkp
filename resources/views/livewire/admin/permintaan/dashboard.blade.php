@@ -16,8 +16,8 @@
         </div>
     </div>
     <div class="table-responsive" wire:loading.remove wire:target='search'>
-        <table class="table table-borderless">
-            <thead class="alert-secondary">
+        <table class="table table-borderless table-striped table-hover mt-3">  <!-- update -->
+            <thead class="table-head">  <!-- update -->
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">ID Permintaan</th>
@@ -87,7 +87,7 @@
 
     <script>
         document.addEventListener('livewire:load', function () {
-            @this.on('newData', function () {
+            window.addEventListener('newData', function () {
                 document.getElementById('notificationSound').play();
             });
         });

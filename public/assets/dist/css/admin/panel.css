@@ -185,6 +185,47 @@
     background-color: #dfdad2;
 }
 
+.add-form{
+    max-width: 600px;
+}
+
+form .form-label{
+    font-weight: 600;
+}
+
+.table-head{
+    border-bottom: 2px solid black;
+}
+
+.icon-shape {
+    min-width: 45px;
+    height: 45px;
+    background-image: linear-gradient(310deg, #fb6340, #fbb140);
+    text-align: center;
+    align-self: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .icon i {
+    color: #ffffff;
+  }
+  
+  .data-count .card {
+    height: 100%;
+  }
+  
+  .data-count .card .col-md-3 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .data-count .card .row {
+    height: 100%;
+    align-items: center;
+  }
 
 @media(max-width: 768px) {
     .slider {

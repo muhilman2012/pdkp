@@ -1,6 +1,6 @@
 <div>
     <div class="d-flex mb-3">
-        <a href="{{ route('admin.pengemudi.create') }}" class="btn btn-outline-secondary">Tambah</a>
+        <a href="{{ route('admin.pengemudi.create') }}" class="btn btn-outline-success"><i class="fas fa-plus-circle fa-sm fa-fw me-1"></i>Tambah</a>
         <div class="d-flex ms-auto">
 			<input wire:model='search' type="text" class="form-control" placeholder="Cari...">
 			<div class="ms-2" style="width: 100px">
@@ -15,8 +15,8 @@
 		</div>
     </div>
     <div class="table-responsive" wire:loading.remove wire:target='search'>
-        <table class="table table-borderless">
-            <thead class="alert-secondary">
+        <table class="table table-borderless table-striped table-hover mt-3">  <!-- update -->
+            <thead class="table-head">  <!-- update -->
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Foto</th>
@@ -35,11 +35,11 @@
                     <td>{{ $item->name }}</td>
                     <td>{{ $item->phone }}</td>
                     <td class="text-nowrap">
-                        <a href="" class="btn btn-outline-secondary btn-sm">
+                        <a href="" class="btn btn-outline-warning btn-sm">
                             <i class="fas fa-pencil-alt fa-sm fa-fw"></i>
                         </a>
                         <button wire:click="removed({{ $item->id_users }})" type="button"
-                            class="btn btn-outline-secondary btn-sm">
+                            class="btn btn-outline-danger btn-sm">
                             <i class="fas fa-trash fa-sm fa-fw"></i>
                         </button>
                     </td>

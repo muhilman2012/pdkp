@@ -18,7 +18,7 @@
             <p class="fs-4 fw-bold mb-0">Edit Data Pengemudi</p>
         </div>
         <div class="d-block p-3">
-            <form action="{{ route('admin.pengemudi.update', ['id' => $data->id_pengemudi]) }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('admin.pengemudi.update', ['id' => $data->id]) }}" method="post" enctype="multipart/form-data">
                 @csrf
                 @method('put')
                 <div class="mb-3">
@@ -76,7 +76,7 @@
 @section('script')
 <script>
     CKEDITOR.replace( 'editors', {
-        filebrowserUploadUrl: "{{route('admin.news.upload.editor', ['_token' => csrf_token() ])}}",
+        filebrowserUploadUrl: "{{route('admin.pengemudi.upload.editor', ['_token' => csrf_token() ])}}",
         filebrowserUploadMethod: 'form'
     });
 </script>

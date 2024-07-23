@@ -47,6 +47,10 @@ class Permintaan extends Model
         'pengemudi_id',
         'kendaraan',
         'file',
+        'rating',
+        'review',
+        'pesan',
+        'user_id',
     ];
 
     // Event booting untuk menghasilkan UUID saat membuat instance baru
@@ -64,5 +68,10 @@ class Permintaan extends Model
     public function pengemudi()
     {
         return $this->belongsTo(pengemudi::class, 'pengemudi_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

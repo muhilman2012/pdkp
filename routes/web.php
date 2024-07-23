@@ -15,6 +15,9 @@ use App\Http\Controllers\admin\permintaanAdmin;
 use App\Http\Controllers\pages\indexController;
 use App\Http\Controllers\pages\layananController;
 use App\Http\Controllers\pages\permintaan\pegawaiController;
+use App\Http\Controllers\pages\permintaan\eselonController;
+use App\Http\Controllers\pages\permintaan\tamuController;
+use App\Http\Controllers\pages\permintaan\wapresController;
 use App\Http\Controllers\auth\authUser;
 use App\Http\Controllers\pages\profileUser;
 use App\Http\Controllers\PengemudiController;
@@ -40,8 +43,18 @@ Route::group(['middleware' => 'auth:web'], function () {
     Route::get('/layanan', [indexController::class, 'layanan'])->name('pages.layanan');
     Route::get('/layanan/pegawai', [pegawaiController::class, 'index'])->name('layanan.pegawai');
     Route::post('/layanan/pegawai/store', [pegawaiController::class, 'store'])->name('layanan.pegawai.store');
+    Route::get('/layanan/eselon', [eselonController::class, 'index'])->name('layanan.eselon');
+    Route::post('/layanan/eselon/store', [eselonController::class, 'store'])->name('layanan.eselon.store');
+    Route::get('/layanan/tamu', [tamuController::class, 'index'])->name('layanan.tamu');
+    Route::post('/layanan/tamu/store', [tamuController::class, 'store'])->name('layanan.tamu.store');
+    Route::get('/layanan/wapres', [wapresController::class, 'index'])->name('layanan.wapres');
+    Route::post('/layanan/wapres/store', [wapresController::class, 'store'])->name('layanan.wapres.store');
+
     // profile routeing
     Route::get('/profile', [profileUser::class, 'index'])->name('pages.profile');
+    Route::get('/profile/edit', [profileUser::class, 'edit'])->middleware('auth')->name('pages.editprofile');
+    Route::post('/profile/update', [profileUser::class, 'update'])->middleware('auth')->name('pages.profile.update');
+
     Route::get('/logout', [authUser::class, 'logout'])->name('logout');
 
 });
@@ -68,7 +81,7 @@ Route::group(['prefix' => 'admin',  'middleware' => 'auth:admin'], function () {
     Route::post('/dashboard/users/tambah/store', [usersAdmin::class, 'store'])->name('admin.users.create.store');
     Route::get('/dashboard/users/ubah/{id}', [usersAdmin::class, 'edit'])->name('admin.users.edit');
     Route::put('/dashboard/users/perbarui/{id}', [usersAdmin::class, 'update'])->name('admin.users.update');
-    Route::put('/dashboard/users/detail/{id}', [usersAdmin::class, 'show'])->name('admin.users.detail');
+    Route::get('/dashboard/users/detail/{id}', [usersAdmin::class, 'show'])->name('admin.users.detail');
     Route::get('/dashboard/users/upload/editore', [usersAdmin::class, 'editor'])->name('admin.users.upload.editor');
 
     // pengemudi menu routing
@@ -77,7 +90,7 @@ Route::group(['prefix' => 'admin',  'middleware' => 'auth:admin'], function () {
     Route::post('/dashboard/pengemudi/tambah/store', [pengemudiAdmin::class, 'store'])->name('admin.pengemudi.create.store');
     Route::get('/dashboard/pengemudi/ubah/{id}', [pengemudiAdmin::class, 'edit'])->name('admin.pengemudi.edit');
     Route::put('/dashboard/pengemudi/perbarui/{id}', [pengemudiAdmin::class, 'update'])->name('admin.pengemudi.update');
-    Route::put('/dashboard/pengemudi/detail/{id}', [pengemudiAdmin::class, 'show'])->name('admin.pengemudi.detail');
+    Route::get('/dashboard/pengemudi/detail/{id}', [pengemudiAdmin::class, 'show'])->name('admin.pengemudi.detail');
     Route::get('/dashboard/pengemudi/upload/editore', [pengemudiAdmin::class, 'editor'])->name('admin.pengemudi.upload.editor');
 
     // kendaraan menu routing
@@ -86,7 +99,7 @@ Route::group(['prefix' => 'admin',  'middleware' => 'auth:admin'], function () {
     Route::post('/dashboard/kendaraan/tambah/store', [kendaraanAdmin::class, 'store'])->name('admin.kendaraan.create.store');
     Route::get('/dashboard/kendaraan/ubah/{id}', [kendaraanAdmin::class, 'edit'])->name('admin.kendaraan.edit');
     Route::put('/dashboard/kendaraan/perbarui/{id}', [kendaraanAdmin::class, 'update'])->name('admin.kendaraan.update');
-    Route::put('/dashboard/kendaraan/detail/{id}', [kendaraanAdmin::class, 'show'])->name('admin.kendaraan.detail');
+    Route::get('/dashboard/kendaraan/detail/{id}', [kendaraanAdmin::class, 'show'])->name('admin.kendaraan.detail');
     Route::get('/dashboard/kendaraan/upload/editore', [kendaraanAdmin::class, 'editor'])->name('admin.kendaraan.upload.editor');
 
     // permintaan menu routing
@@ -95,7 +108,7 @@ Route::group(['prefix' => 'admin',  'middleware' => 'auth:admin'], function () {
     Route::post('/dashboard/permintaan/tambah/store', [permintaanAdmin::class, 'store'])->name('admin.permintaan.create.store');
     Route::get('/dashboard/permintaan/ubah/{id}', [permintaanAdmin::class, 'edit'])->name('admin.permintaan.edit');
     Route::put('/dashboard/permintaan/perbarui/{id}', [permintaanAdmin::class, 'update'])->name('admin.permintaan.update');
-    Route::put('/dashboard/permintaan/detail/{id}', [permintaanAdmin::class, 'show'])->name('admin.permintaan.detail');
+    Route::get('/dashboard/permintaan/detail/{id}', [permintaanAdmin::class, 'show'])->name('admin.permintaan.detail');
     Route::get('/dashboard/permintaan/upload/editore', [permintaanAdmin::class, 'editor'])->name('admin.permintaan.upload.editor');
     Route::get('/dashboard/permintaan/reports', [indexAdmin::class, 'permintaanReport'])->name('admin.reports.permintaan');
     Route::get('/dashboard/permintaan/reports/permintaan/export', [indexAdmin::class, 'exportPermintaanToCSV'])->name('admin.reports.permintaan.export');

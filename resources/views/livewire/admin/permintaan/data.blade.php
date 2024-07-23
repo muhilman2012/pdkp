@@ -15,8 +15,8 @@
 		</div>
     </div>
     <div class="table-responsive" wire:loading.remove wire:target='search'>
-        <table class="table table-borderless">
-            <thead class="alert-secondary">
+        <table class="table table-borderless table-striped table-hover mt-3">  <!-- update -->
+            <thead class="table-head">  <!-- update -->
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">ID Permintaan</th>
@@ -55,6 +55,9 @@
                     <td class="text-nowrap">
                         <a href="{{ route('admin.permintaan.edit', ['id' => $item->id_permintaan]) }}" class="btn btn-outline-secondary btn-sm">
                             <i class="fas fa-pencil-alt fa-sm fa-fw"></i>
+                        </a>
+                        <a href="{{ route('admin.permintaan.detail', ['id' => $item->id_permintaan]) }}" class="btn btn-outline-secondary btn-sm">
+                            <i class="fas fa-eye fa-sm fa-fw"></i>
                         </a>
                         <button wire:click="removed({{ $item->id_permintaan }})" type="button" class="btn btn-outline-secondary btn-sm">
                             <i class="fas fa-trash fa-sm fa-fw"></i>

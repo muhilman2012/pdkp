@@ -56,7 +56,7 @@
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
-    <title>Profil - User PDKP</title>
+    <title>Profile - User PDKP</title>
 </head>
 
 <body>
@@ -81,32 +81,52 @@
             <div class="flex flex-col mt-4 gap-4">
                 <div class="flex flex-col w-full gap-1">
                     <label for="name" class="text-black font-medium text-[14px]">Nama</label>
-                    <input id="name" name="name" type="text" placeholder="" value="{{ $user->name }}" class="mt-[4px] bg-white p-[12px] placeholder:text-placeholder rounded w-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold focus:border-gold" disabled>
+                    <input id="name" name="name" type="text" value="{{ $user->name }}" class="mt-[4px] bg-white p-[12px] placeholder:text-placeholder rounded w-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold focus:border-gold" disabled>
                 </div>
                 <div class="flex flex-col w-full gap-1">
                     <label for="nip" class="text-black font-medium text-[14px]">NIP</label>
-                    <input id="nip" name="nip" type="text" placeholder="" value="{{ $user->nip }}" class="mt-[4px] bg-white p-[12px] placeholder:text-placeholder rounded w-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold focus:border-gold" disabled>
+                    <input id="nip" name="nip" type="text" value="{{ $user->nip }}" class="mt-[4px] bg-white p-[12px] placeholder:text-placeholder rounded w-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold focus:border-gold" disabled>
                 </div>
                 <div class="flex flex-col w-full gap-1">
                     <label for="email" class="text-black font-medium text-[14px]">Email</label>
-                    <input id="email" name="email" type="text" placeholder="" value="{{ $user->email }}" class="mt-[4px] bg-white p-[12px] placeholder:text-placeholder rounded w-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold focus:border-gold" disabled>
+                    <input id="email" name="email" type="text" value="{{ $user->email }}" class="mt-[4px] bg-white p-[12px] placeholder:text-placeholder rounded w-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold focus:border-gold" disabled>
                 </div>
                 <div class="flex flex-col w-full gap-1">
-                    <label for="no_telp" class="text-black font-medium text-[14px]">No. HP / Whatsapp</label>
-                    <input id="no_telp" name="no_telp" type="text" placeholder="" value="{{ $user->phone }}" class="mt-[4px] bg-white p-[12px] placeholder:text-placeholder rounded w-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold focus:border-gold" disabled>
+                    <label for="phone" class="text-black font-medium text-[14px]">No. HP / Whatsapp</label>
+                    <input id="phone" name="phone" type="text" value="{{ $user->phone }}" class="mt-[4px] bg-white p-[12px] placeholder:text-placeholder rounded w-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold focus:border-gold" disabled>
                 </div>
                 <div class="flex flex-col w-full gap-1">
                     <label for="unit_kerja" class="text-black font-medium text-[14px]">Unit Kerja</label>
-                    <input id="unit_kerja" name="unit_kerja" type="text" placeholder="" value="{{ $user->divisi->nama }}" class="mt-[4px] bg-white p-[12px] placeholder:text-placeholder rounded w-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold focus:border-gold" disabled>
+                    <input id="unit_kerja" name="unit_kerja" type="text" value="{{ $user->divisi->nama }}" class="mt-[4px] bg-white p-[12px] placeholder:text-placeholder rounded w-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold focus:border-gold" disabled>
                 </div>
             </div>
         </div>
         <div class="flex flex-col mt-4 gap-2">
-            <a href="edit_profil.html" class="w-full rounded bg-gold text-center text-white font-semibold p-3 hover:bg-[#B57F21] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white focus:border-white">Edit Profil</a>
-            <a href="{{ route ('pages.dashboard') }}" class="w-full rounded bg-transparent text-center text-danger font-semibold p-3 outline outline-2">Kembali</a>
-            <a href="{{ route ('logout') }}" class="w-full rounded bg-danger text-center text-white font-semibold p-3 hover:bg-[#DE0000] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white focus:border-white">Keluar</a>
+            <a href="{{ route('pages.editprofile') }}" class="w-full rounded bg-gold text-center text-white font-semibold p-3 hover:bg-[#B57F21] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white focus:border-white">Edit Profil</a>
+            <a href="{{ route('pages.dashboard') }}" class="w-full rounded bg-transparent text-center text-danger font-semibold p-3 outline outline-2">Kembali</a>
+            <a href="{{ route('logout') }}" class="w-full rounded bg-danger text-center text-white font-semibold p-3 hover:bg-[#DE0000] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white focus:border-white">Keluar</a>
         </div>
     </section>
+    
+    <script src="{{ url('/assets/app/js/app.js') }}"></script>
+    <script src="{{ url('/assets/dist/js/alert.js') }}"></script>
+    @if(session()->has('success'))
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil',
+            text: '{{ session()->get("success") }}',
+        })
+    </script>
+    @elseif(session()->has('error'))
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Maaf',
+            text: '{{ session()->get("error") }}',
+        })
+    </script>
+    @endif
 </body>
 
 </html>

@@ -73,7 +73,7 @@ class usersAdmin extends Controller
             $resorce->move(public_path() . "/images/users/", $namasamplefoto);
         
             if ($data->save()) {
-                return redirect()->route('admin.users')->with('success', 'Users data saved successfully with auto-generated password: ' . $autoPassword);
+                return redirect()->route('admin.users')->with('success', 'Data Pengguna Berhasil disimpan dengan Password : ' . $autoPassword);
             } else {
                 return redirect()->back()->with('error', 'Sorry, the database is busy. Please try again later.');
             }

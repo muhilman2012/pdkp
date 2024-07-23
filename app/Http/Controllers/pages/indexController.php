@@ -20,8 +20,8 @@ class indexController extends Controller
     }
 
     public function dashboard(){
-        $user = User::all();
-        $permintaan = permintaan::all();
+        $user = Auth::user();
+        $permintaan = permintaan::with('pengemudi')->where('user_id', $user->id)->get();
         return view('pages.dashboard',[
             'user'          => $user,
             'permintaan'    => $permintaan,

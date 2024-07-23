@@ -83,17 +83,17 @@
             <div class="flex flex-col gap-4">
                 @if(Auth::user()->unit_kerja == 11)
                     <div class="flex justify-between gap-4 text-white">
-                        <a href="" class="flex flex-col justify-between items-end bg-gold w-full gap-3 p-3 rounded-lg">
+                        <a href="{{ route('layanan.wapres') }}" class="flex flex-col justify-between items-end bg-gold w-full gap-3 p-3 rounded-lg">
                             <ion-icon name="star" class="w-6 h-6"></ion-icon>
                             <p class="font-medium text-sm text-left w-full">Dukungan Layanan Untuk <span class="font-bold">WAPRES</span></p>
                         </a>
-                        <a href="" class="flex flex-col justify-start items-end bg-silver w-full gap-3 p-3 rounded-lg">
+                        <a href="{{ route('layanan.tamu') }}" class="flex flex-col justify-start items-end bg-silver w-full gap-3 p-3 rounded-lg">
                             <ion-icon name="man" class="w-6 h-6"></ion-icon>
                             <p class="font-medium text-sm text-left w-full">Dukungan Layanan Untuk <span class="font-bold">TAMU NEGARA</span></p>
                         </a>
                     </div>
                     <div class="flex justify-between gap-4 text-white">
-                        <a href="" class="flex flex-col justify-start items-end bg-red w-full gap-3 p-3 rounded-lg">
+                        <a href="{{ route('layanan.eselon') }}" class="flex flex-col justify-start items-end bg-red w-full gap-3 p-3 rounded-lg">
                             <ion-icon name="id-card" class="w-6 h-6"></ion-icon>
                             <p class="font-medium text-sm text-left w-full">Dukungan Layanan Untuk <span class="font-bold">ESELON</span></p>
                         </a>
@@ -104,7 +104,7 @@
                     </div>
                 @else
                     <div class="flex justify-between gap-4 text-white">
-                        <a href="" class="flex flex-col justify-start items-end bg-red w-full gap-3 p-3 rounded-lg">
+                        <a href="{{ route('layanan.eselon') }}" class="flex flex-col justify-start items-end bg-red w-full gap-3 p-3 rounded-lg">
                             <ion-icon name="id-card" class="w-6 h-6"></ion-icon>
                             <p class="font-medium text-sm text-left w-full">Dukungan Layanan Untuk <span class="font-bold">ESELON</span></p>
                         </a>

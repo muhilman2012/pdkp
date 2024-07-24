@@ -72,7 +72,6 @@ class pegawaiController extends Controller
         $data->capacity         = $request->capacity;
         $data->tipe_perjalanan  = $request->tipe_perjalanan;
         $data->jam_awal         = $request->jam_awal;
-        $data->jam_akhir        = $request->jam_akhir;
         $data->date             = $request->date;
         $data->tujuan_awal      = $request->tujuan_awal;
         $data->tujuan_akhir     = $request->tujuan_akhir;

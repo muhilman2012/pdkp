@@ -27,16 +27,14 @@ class usersAdmin extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name'          => 'required',
-            'nip'           => 'required',
+            'nip'           => 'nullable',
             'phone'         => 'required',
-            'foto'          => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'foto'          => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'email'         => 'required|min:8|email|max:255',
             'unit_kerja'    => 'required',
         ], [
             'name.required'       => 'Please input field Name!',
-            'nip.required'        => 'Please input field NIP!',
             'phone.required'      => 'Please input field Phone!',
-            'foto.required'       => 'Please upload Foto',
             'foto.image'          => 'File is not foto',
             'foto.mimes'          => 'File must be foto',
             'foto.max'            => 'File foto oversized',

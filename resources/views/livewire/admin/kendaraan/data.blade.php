@@ -19,9 +19,11 @@
             <thead class="table-head">  <!-- update -->
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Foto</th>
                     <th scope="col">Nama kendaraan</th>
                     <th scope="col">Nopol</th>
+                    <th scope="col">Warna</th>
+                    <th scope="col">Kategori</th>
+                    <th scope="col">Tahun</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
@@ -29,11 +31,11 @@
                 @foreach ($data as $index => $item)
                 <tr>
                     <th scope="row">{{ $index + 1 }}</th>
-                    <td>
-                        <img src="{{ url('/images/kendaraan/' . $item->foto ) }}" class="rounded" width="100px">
-                    </td>
                     <td>{{ $item->name }}</td>
                     <td>{{ $item->nopol }}</td>
+                    <td>{{ $item->warna }}</td>
+                    <td>{{ $item->kategori }}</td>
+                    <td>{{ $item->tahun }}</td>
                     <td class="text-nowrap">
                         <a href="{{ route('admin.kendaraan.edit', ['id' => $item->id]) }}" class="btn btn-outline-secondary btn-sm">
                             <i class="fas fa-pencil-alt fa-sm fa-fw"></i>

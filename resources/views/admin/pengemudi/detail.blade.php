@@ -14,7 +14,7 @@
                 <div class="mb-3 row">
                     <div class="col-md-6 mb-3">
                         <p class="text-label fw-bold mb-1 ">Foto :</p>
-                        <img src="{{ url('/images/users/' . $data->foto ) }}" class="rounded " width="100px">
+                        <img src="{{ url('/images/pengemudi/' . $data->foto ) }}" class="rounded " width="100px">
                     </div>
                     
                     <div class="col-md-6 mb-3">

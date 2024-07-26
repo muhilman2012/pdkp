@@ -27,14 +27,16 @@ class usersAdmin extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name'          => 'required',
-            'nip'           => 'nullable',
+            'nip'           => 'required',
             'phone'         => 'required',
-            'foto'          => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'foto'          => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'email'         => 'required|min:8|email|max:255',
             'unit_kerja'    => 'required',
         ], [
             'name.required'       => 'Please input field Name!',
+            'nip.required'        => 'Please input field NIP!',
             'phone.required'      => 'Please input field Phone!',
+            'foto.required'       => 'Please upload Foto',
             'foto.image'          => 'File is not foto',
             'foto.mimes'          => 'File must be foto',
             'foto.max'            => 'File foto oversized',
@@ -89,74 +91,79 @@ class usersAdmin extends Controller
     public function edit($id)
     {
         $data = User::find($id);
-        return view('admin.users.edit', [
-            'data' => $data
-        ]);
+        $divisis = divisi::all();
+        return view('admin.users.edit', compact('divisis','data'));
+       
     }
 
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'title'        => 'required',
-            'description'  => 'required',
-            'content'      => 'required',
-            // 'imagesMultiple.*'  => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'name'          => 'required',
+            'nip'           => 'required',
+            'phone'         => 'required',
+            'email'         => 'required|email|max:255',
+            'unit_kerja'    => 'required',
+            'foto'          => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'password'      => 'nullable|min:8|confirmed', // Validasi password
         ], [
-            'title.required'        => 'Please input field title users',
-            'description.required'  => 'Please input field description users',
-            'content.required'      => 'Please input field content users',
+            'name.required'         => 'Please input field Name!',
+            'nip.required'          => 'Please input field NIP!',
+            'phone.required'        => 'Please input field Phone!',
+            'email.required'        => 'Masukan alamat Email!',
+            'email.email'           => 'Alamat email anda salah!',
+            'email.max'             => 'Oops email melampaui batas!',
+            'unit_kerja.required'   => 'Please input field Unit Kerja',
+            'foto.image'            => 'File is not foto',
+            'foto.mimes'            => 'File must be foto',
+            'foto.max'              => 'File foto oversized',
+            'password.min'          => 'Password harus terdiri dari minimal 8 karakter',
+            'password.confirmed'    => 'Password konfirmasi tidak cocok',
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
-        } else {
-            // slug from title
-            $slug = Str::slug($request->title);
-            // schedule
-            $schedule = $request->dates . ' ' . date('H:i:s', strtotime($request->times));
-            if ($request->images) {
-                $validImages = Validator::make($request->all(), [
-                    'images'       => 'image|mimes:jpeg,png,jpg,gif,svg|max:4512',
-                ], [
-                    'images.image'          => 'File is not images',
-                    'images.mimes'          => 'File must be images',
-                    'images.max'            => 'File images oversized',
-                ]);
-                if ($validImages->fails()) {
-                    return redirect()->back()->withErrors($validImages)->withInput();
-                } else {
-                    // images 
-                    $resorce = $request->images;
-                    $originNamaImages = $resorce->getClientOriginalName();
-                    $NewNameImage = "IMG-" . substr(md5($originNamaImages . date("YmdHis")), 0, 14);
-                    $namasamplefoto = $NewNameImage . "." . $resorce->getClientOriginalExtension();
-                    // update with images
-                    $data = User::find($id);
-                    $data->title = $request->title;
-                    $data->slug = $slug;
-                    $data->description = $request->description;
-                    $data->content = $request->content;
-                    $data->images = $namasamplefoto;
-                    $resorce->move(public_path() . "/images/users/", $namasamplefoto);
-                    if ($data->save()) {
-                        return redirect()->route('admin.users')->with('success', 'users data saved successfully');
-                    } else {
-                        return redirect()->back()->with('error', 'sorry database is busy try again letter');
-                    }
-                }
-            } else {
-                // update no images
-                $data = User::find($id);
-                $data->title = $request->title;
-                $data->slug = $slug;
-                $data->description = $request->description;
-                $data->content = $request->content;
-                if ($data->save()) {
-                    return redirect()->route('admin.users')->with('success', 'users data saved successfully');
-                } else {
-                    return redirect()->back()->with('error', 'sorry database is busy try again letter');
-                }
+        }
+
+        // Cari data pengguna berdasarkan ID
+        $data = User::find($id);
+        if (!$data) {
+            return redirect()->back()->with('error', 'Data tidak ditemukan');
+        }
+
+        $data->name = $request->name;
+        $data->nip = $request->nip;
+        $data->phone = $request->phone;
+        $data->email = $request->email;
+        $data->unit_kerja = $request->unit_kerja;
+
+        if ($request->hasFile('foto')) {
+            // Hapus foto lama jika ada
+            if ($data->foto && file_exists(public_path('images/users/' . $data->foto))) {
+                unlink(public_path('images/users/' . $data->foto));
             }
+
+            // Upload foto baru
+            $resorce = $request->foto;
+            $extension = $resorce->getClientOriginalExtension();
+            $requestName = $request->input('name'); // Mengambil nama dari request
+            $cleanedName = str_replace(' ', '', $requestName); // Menghapus spasi dari nama
+            $NewNameImage = "IMG-" . $cleanedName;
+            $namasamplefoto = $NewNameImage . "." . $extension;
+
+            $data->foto = $namasamplefoto;
+            $resorce->move(public_path() . "/images/users/", $namasamplefoto);
+        }
+
+        // Update password jika diisi
+        if ($request->password) {
+            $data->password = bcrypt($request->password);
+        }
+
+        if ($data->save()) {
+            return redirect()->route('admin.users')->with('success', 'Data Pengguna Berhasil diperbarui');
+        } else {
+            return redirect()->back()->with('error', 'Sorry, the database is busy. Please try again later.');
         }
     }
 }

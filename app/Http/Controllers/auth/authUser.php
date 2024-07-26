@@ -32,13 +32,13 @@ class authUser extends Controller
 
         if ($request->user_type == 'user') {
             if (Auth::guard('web')->attempt($credentials)) {
-                return redirect()->route('pages.dashboard')->with('success', 'Berhasil Login');
+                return redirect()->route('pages.dashboard');
             } else {
                 return redirect()->back()->with('error', 'Email atau Password Anda Salah!');
             }
         } elseif ($request->user_type == 'pengemudi') {
             if (Auth::guard('pengemudi')->attempt($credentials)) {
-                return redirect()->route('pengemudi.dashboard')->with('success', 'Berhasil Login');
+                return redirect()->route('pengemudi.dashboard');
             } else {
                 return redirect()->back()->with('error', 'Email atau Password Anda Salah!');
             }

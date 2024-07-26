@@ -89,6 +89,9 @@
             <h4 class="font-semibold text-regular mb-3">Info Update Layanan</h4>
             <div class="flex flex-col gap-4 w-full">
                 @foreach($permintaan as $item)
+                    @if($item->status == 'DIBATALKAN' || $item->status == 'SELESAI')
+                        @continue
+                    @endif
                     @php
                         $bgColor = '';
                         if ($item->status == 'BARU') {

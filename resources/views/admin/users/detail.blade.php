@@ -29,7 +29,10 @@
                         <p class="text-label fw-bold mb-1 ">Email :</p>
                         <p>{{ $data->email }}</p>
                     </div>
-                    
+                    <div class="col-md-6 mb-3">
+                        <p class="text-label fw-bold mb-1 ">NIP :</p>
+                        <p>{{ $data->nip }}</p>
+                    </div>
                     <div class="col-md-6 mb-3">
                         <p class="text-label fw-bold mb-1 ">Unit Kerja :</p>
                         <p>{{ $data->divisi->nama }}</p>

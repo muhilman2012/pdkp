@@ -44,10 +44,12 @@ class Permintaan extends Model
         'tujuan_awal',
         'tujuan_akhir',
         'status',
+        'status_update',
         'pengemudi_id',
         'kendaraan',
         'file',
-        'rating',
+        'rating_ops',
+        'rating_driver',
         'review',
         'pesan',
         'user_id',
@@ -73,5 +75,10 @@ class Permintaan extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function kendaraan()
+    {
+        return $this->belongsTo(Kendaraan::class, 'kendaraan_id');
     }
 }

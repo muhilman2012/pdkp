@@ -22,7 +22,7 @@ return new class extends Migration
             $table->integer('capacity'); // Ubah ke integer jika kapasitas adalah angka
             $table->string('tipe_perjalanan');
             $table->time('jam_awal');
-            $table->time('jam_akhir');
+            $table->time('jam_akhir')->nullable();
             $table->date('date');
             $table->string('tujuan_awal');
             $table->string('tujuan_akhir');
@@ -30,8 +30,12 @@ return new class extends Migration
             $table->unsignedBigInteger('pengemudi_id')->nullable(); // Tambahkan nullable jika pengemudi_id bisa kosong
             $table->foreign('pengemudi_id')->references('id')->on('pengemudi');
             $table->string('kendaraan')->nullable();
+            $table->string('nopol')->nullable();
+            $table->string('warna')->nullable();
             $table->string('status');
-            $table->string('rating')->nullable();
+            $table->timestamp('status_update')->nullable();
+            $table->string('rating_ops')->nullable();
+            $table->string('rating_driver')->nullable();
             $table->string('review')->nullable();
             $table->string('pesan')->nullable();
             $table->timestamps();

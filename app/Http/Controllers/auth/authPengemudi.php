@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use App\Models\pengemudi;
 
-class authUser extends Controller
+class authPengemudi extends Controller
 {
     public function showLoginForm()
     {
@@ -47,8 +47,8 @@ class authUser extends Controller
 
     public function logout()
     {
-        if (Auth::guard('web')->check()) {
-            Auth::guard('web')->logout();
+        if (Auth::guard('pengemudi')->check()) {
+            Auth::guard('pengemudi')->logout();
         }
 
         return redirect()->route('login');

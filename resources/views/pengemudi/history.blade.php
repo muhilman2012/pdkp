@@ -67,26 +67,13 @@
             <img class="w-12" src="{{ url ('/assets/logo/logo-sekwapres.svg') }}" alt="Logo SETWAPRES">
             <img class="w-4/12 h-fit" src="{{ url ('/assets/logo/logo-pdkp-gold.png') }}" alt="Logo PDKP">
         </div>
-        <div class="flex justify-between items-center mt-5">
-            <div class="flex flex-col">
-                <p class="font-medium text-regular">{{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}</p>
-                <p id="greeting" class="font-bold text-xl"></p>
-            </div>
-            <a href="{{ route('logout.pengemudi') }}" onclick="event.preventDefault(); document.getElementById('logout-form-pengemudi').submit();">
-                <ion-icon name="exit" class="w-8 h-8 text-danger"></ion-icon>
+        <div class="flex mt-5 items-center justify-center gap-2 w-full">
+            <a href="{{ route ('pengemudi.dashboard') }}">
+                <ion-icon name="chevron-back-circle-outline" class="text-gold h-10 w-10"></ion-icon>
             </a>
-            <form id="logout-form-pengemudi" action="{{ route('logout.pengemudi') }}" method="POST" style="display: none;">
-                @csrf
-            </form>
-        </div>
-        <div class="flex justify-between gap-4 text-white mt-5">
-            <a href="{{ route('pengemudi.history') }}" class="flex flex-col justify-between items-end bg-gold w-full gap-3 p-3 rounded-lg">
-                <ion-icon name="git-pull-request-outline" class="w-6 h-6"></ion-icon>
-                <p class="font-medium text-sm text-left w-full">History Permintaan</p>
-            </a>
+            <p class="font-bold text-lg leading-5 w-full">History Permintaan</p>
         </div>
         <div class="text-black flex flex-col mt-5">
-            <h4 class="font-semibold text-regular mb-3">Info Update Layanan</h4>
             <div class="flex flex-col gap-4 w-full">
                 @foreach($permintaan as $item)
                     @php
@@ -150,12 +137,6 @@
         </div>
     </section>
 
-    <script>
-        // Refresh halaman setiap 10 detik
-        setTimeout(function(){
-            location.reload();
-        }, 10000);
-    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const greetingElement = document.getElementById('greeting');

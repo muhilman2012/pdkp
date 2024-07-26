@@ -29,7 +29,7 @@
                         quote: '#C8C8C8',
                         black: '#222A35',
                         gold: '#CB9638',
-                        silver: '#8B8B8B',
+                        silver: '#505050',
                         green: '#00A6A6',
                         red: '#880D1E',
                         purple: '#B98EA7',
@@ -45,8 +45,7 @@
 </head>
 
 <body>
-    <section
-        class="flex flex-col justify-center px-4 mx-auto bg-white max-w-md h-screen text-black bg-center bg-cover bg-[url('/assets/images/bg-with-cars.png')]">
+    <section class="flex flex-col justify-center px-4 mx-auto bg-white max-w-md h-screen text-black bg-center bg-cover bg-[url('/assets/images/bg-with-cars.png')]">
         <div class="flex flex-col gap-y-4 h-fit justify-center items-center ">
             <img class="w-12" src="{{ url('/assets/logo/logo-sekwapres.svg') }}" alt="Logo Sekretariat Wakil Presiden">
             <h4 class="text-white text-2xl font-semibold">Selamat Datang</h4>
@@ -60,7 +59,7 @@
                         {{ request()->get('error') }}
                     </div>
                 @endif
-                <form method="POST" action="{{ route('pages.index.store') }}">
+                <form method="POST" action="{{ route('login.post') }}">
                     @csrf
                     <div class="flex flex-col w-full gap-4">
                         <div class="flex flex-col w-full">
@@ -97,7 +96,7 @@
                         </div>
                     </div>
                     <br>
-                    <button type="submit" class="w-full rounded font-semibold bg-gold text-white p-3 hover:bg-[#B57F21] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white focus:border-white">Masuk</button>
+                    <button type="submit" class="w-full mb-4 rounded font-semibold bg-gold text-white p-3 hover:bg-[#B57F21] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white focus:border-white">Masuk</button>
                 </form>
             </div>
         </div>

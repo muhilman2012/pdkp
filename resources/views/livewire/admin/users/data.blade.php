@@ -39,8 +39,11 @@
                     <td>{{ $item->email }}</td>
                     <td>{{ $item->divisi->nama }}</td>
                     <td class="text-nowrap">
-                        <a href="" class="btn btn-outline-warning btn-sm">
+                        <a href="{{ route('admin.users.edit', ['id' => $item->id]) }}" class="btn btn-outline-warning btn-sm">
                             <i class="fas fa-pencil-alt fa-sm fa-fw"></i>
+                        </a>
+                        <a href="{{ route('admin.users.detail', ['id' => $item->id]) }}" class="btn btn-outline-secondary btn-sm">
+                            <i class="fas fa-eye fa-sm fa-fw"></i>
                         </a>
                         <button wire:click="removed({{ $item->id }})" type="button"
                             class="btn btn-outline-danger btn-sm">

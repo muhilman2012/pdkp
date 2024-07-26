@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\permintaan;
+use App\Models\pengemudi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class PengemudiController extends Controller
 {
@@ -16,9 +18,9 @@ class PengemudiController extends Controller
         return view('pengemudi.dashboard', compact('permintaan'));
     }
 
-    public function show($id)
+    public function show($id_permintaan)
     {
-        $permintaan = permintaan::findOrFail($id);
+        $permintaan = permintaan::findOrFail($id_permintaan);
 
         return view('pengemudi.detail', compact('permintaan'));
     }
@@ -30,5 +32,17 @@ class PengemudiController extends Controller
         $permintaan->save();
 
         return redirect()->route('pengemudi.dashboard')->with('success', 'Status permintaan berhasil diperbarui.');
+    }
+
+    public function history()
+    {
+        $pengemudiId = Auth::guard('pengemudi')->id();
+        $permintaan = permintaan::where('pengemudi_id', $pengemudiId)
+            ->where('status', 'SELESAI')
+            ->orWhere('status', 'DIBATALKAN')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('pengemudi.history', compact('permintaan'));
     }
 }

@@ -25,9 +25,13 @@
     <link rel="stylesheet" href="{{ url('/assets/dist/css/animated.css') }}">
     <link rel="stylesheet" href="{{ url('/assets/dist/css/admin/panel.css') }}">
     <link rel="stylesheet" href="{{ url('/assets/dist/css/admin/color.css') }}">
+
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+    
+
 
     @livewireStyles
 </head>
@@ -143,7 +147,10 @@
                         </a>
                     </div>
                     <a class="nav-link px-3" href="{{ route('admin.kendaraan') }}">
-                        <i class="fas fa-car box-icon" aria-hidden="true"></i>Kendaraan
+                        <i class="fas  fa-car box-icon" aria-hidden="true"></i>Kendaraan
+                    </a>
+                    <a class="nav-link px-3" href="{{ route('admin.reports.permintaan') }}">
+                        <i class="fas fa-clipboard box-icon" aria-hidden="true"></i>Laporan
                     </a>
                     <hr class="soft my-1 text-white">
                     <a class="btnLogout nav-link px-3" href="#">
@@ -166,6 +173,7 @@
     <script src="{{ url('/assets/dist/js/admin/panel.js') }}"></script>
     <script src="{{ asset('/assets/ckeditor4/ckeditor.js') }}"></script>
     <script src="{{ asset('/assets/owl/owl.carousel.min.js') }}"></script>
+
     @livewireScripts
     @yield('script')
 

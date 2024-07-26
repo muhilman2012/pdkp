@@ -19,53 +19,134 @@
         </div>
         <div class="d-block p-3">
             <form action="{{ route('admin.kendaraan.update', ['id' => $data->id]) }}" method="post" enctype="multipart/form-data">
-                @csrf
-                @method('put')
-                <div class="mb-3">
-                    <div class="d-block text-center">
-                        <img src="{{ url('/images/kendaraan/'. $data->images) }}" alt="" class="rounded" width="50%">
+            @csrf
+                @method('post')
+                <div class="row">
+                    <div class="col-md-5 me-2 ">
+                        <div class="mb-4">
+                            <label for="name" class="form-label">Nama Kendaraan</label>
+                            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
+                                value="{{ old('name') }}">
+                            @error('name')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-md-5 me-2 ">
+                        <div class="mb-4">
+                            <label for="merk" class="form-label">Merk Kendaraan</label>
+                            <input type="text" name="merk" class="form-control @error('merk') is-invalid @enderror"
+                                value="{{ old('merk') }}">
+                            @error('merk')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-md-5 me-2 ">
+                        <div class="mb-4">
+                            <label for="type" class="form-label">Tipe Kendaraan</label>
+                            <input type="text" name="type" class="form-control @error('type') is-invalid @enderror"
+                                value="{{ old('type') }}">
+                            @error('type')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-md-5 me-2 ">
+                        <div class="mb-4">
+                            <label for="nopol" class="form-label">Nomor Polisi Kendaraan</label>
+                            <input type="text" name="nopol" class="form-control @error('nopol') is-invalid @enderror"
+                                value="{{ old('nopol') }}">
+                            @error('nopol')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-md-5 me-2 ">
+                        <div class="mb-4">
+                            <label for="jenis_bensin" class="form-label">Jenis Bensin Kendaraan</label>
+                            <input type="text" name="jenis_bensin" class="form-control @error('jenis_bensin') is-invalid @enderror"
+                                value="{{ old('jenis_bensin') }}">
+                            @error('jenis_bensin')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>                                                                  
+                    </div>
+                    <div class="col-md-5 me-2 ">
+                        <div class="mb-4">
+                            <label for="model" class="form-label">Model Kendaraan</label>
+                            <input type="text" name="model" class="form-control @error('model') is-invalid @enderror"
+                                value="{{ old('model') }}">
+                            @error('model')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>                                                          
+                    </div>
+                    <div class="col-md-5 me-2 ">
+                        <div class="mb-4">
+                            <label for="warna" class="form-label">Warna Kendaraan</label>
+                            <input type="text" name="warna" class="form-control @error('warna') is-invalid @enderror"
+                                value="{{ old('warna') }}">
+                            @error('warna')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-md-5 me-2 ">
+                        <div class="mb-4">
+                            <label for="kategori" class="form-label">Kategori Kendaraan</label>
+                            <input type="text" name="kategori" class="form-control @error('kategori') is-invalid @enderror"
+                                value="{{ old('kategori') }}">
+                            @error('kategori')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-md-5 me-2 ">
+                        <div class="mb-4">
+                            <label for="rute" class="form-label">Rute Kendaraan</label>
+                            <input type="text" name="rute" class="form-control @error('rute') is-invalid @enderror"
+                                value="{{ old('rute') }}">
+                            @error('rute')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-md-5 me-2 ">
+                        <div class="mb-4">
+                            <label for="tahun" class="form-label">Tahun Kendaraan</label>
+                            <input type="text" name="tahun" class="form-control @error('tahun') is-invalid @enderror"
+                                value="{{ old('tahun') }}">
+                            @error('tahun')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
                     </div>
                 </div>
-                <div class="mb-3">
-                    <label for="images" class="form-label">Images</label>
-                    <input type="file" name="images" id="images" class="form-control @error('images') is-invalid @enderror">
-                    @error('images')
-                    <div class="invalid-feedback">
-                        {{ $message }}
+                <div class="row">
+                    <div class="my-4 mx-auto form-btn" style="width:200px;">
+                        <button type="submit" class="btn btn-primary form-control ">Save</button>
                     </div>
-                    @enderror
-                </div>
-                <div class="mb-3">
-                    <label for="title" class="form-label">Title</label>
-                    <input type="text" name="title" class="form-control @error('title') is-invalid @enderror" value="{{ $data->title }}">
-                    @error('title')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-                <div class="mb-3">
-                    <label for="description" class="form-label">Small Description</label>
-                    <textarea name="description" id="description" rows="3"
-                        class="form-control @error('description') is-invalid @enderror">{{ $data->description }}</textarea>
-                    @error('description')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-                <div class="mb-3">
-                    <label for="content" class="form-label">Content</label>
-                    <textarea name="content" id="editors" rows="10"
-                        class="form-control @error('content') is-invalid @enderror">{{ $data->content }}</textarea>
-                    @error('content')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-                <div class="mb-3">
-                    <button type="submit" class="btn btn-outline-secondary form-control">Update</button>
                 </div>
             </form>
         </div>

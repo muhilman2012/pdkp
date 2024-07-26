@@ -8,6 +8,7 @@ use App\Models\pengemudi;
 use App\Models\kendaraan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
 
 class permintaanAdmin extends Controller
 {
@@ -95,7 +96,7 @@ class permintaanAdmin extends Controller
     public function edit($id)
     {
         $data = permintaan::find($id);
-        $pengemudi = pengemudi::all();
+        $pengemudi = pengemudi::orderBy('jabatan')->get()->groupBy('jabatan');
         $kendaraan = kendaraan::all();
 
         return view('admin.permintaan.edit', compact('data', 'pengemudi', 'kendaraan'));
@@ -105,10 +106,9 @@ class permintaanAdmin extends Controller
     {
         $validator = Validator::make($request->all(), [
             'pengemudi_id'              => 'required',
-            'kendaraan'                 => 'required',
+            'kendaraan_id'              => 'required',  // Ubah dari 'kendaraan' menjadi 'kendaraan_id'
             'status'                    => 'required',
         ], [
-            
             'pengemudi_id.required'     => 'Mohon pilih pengemudi',
             'kendaraan_id.required'     => 'Mohon pilih kendaraan',
             'status.required'           => 'Mohon pilih status',
@@ -118,25 +118,28 @@ class permintaanAdmin extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $file_name = null;
-        if ($request->hasFile('file')) {
-            // Simpan file PDF ke dalam folder surat tugas jika diunggah
-            $file_name = $request->file('file')->getClientOriginalName();
-            $request->file('file')->storeAs('public/file/surat_tugas', $file_name);
-        }
-
         // Cari data permintaan berdasarkan ID
         $data = permintaan::find($id);
         if (!$data) {
             return redirect()->back()->with('error', 'Data tidak ditemukan');
         }
 
+        // Cari data kendaraan berdasarkan ID
+        $kendaraan = kendaraan::find($request->kendaraan_id);
+        if (!$kendaraan) {
+            return redirect()->back()->with('error', 'Data kendaraan tidak ditemukan');
+        }
+
         // Update data permintaan
         $data->pengemudi_id     = $request->pengemudi_id;
-        $data->kendaraan        = $request->kendaraan;
+        $data->kendaraan        = $kendaraan->name;
+        $data->nopol            = $kendaraan->nopol;
+        $data->warna            = $kendaraan->warna;
         $data->status           = $request->status;
-        if ($file_name) {
-            $data->file         = $file_name;
+
+        // Jika status berubah menjadi 'DIKONFIRMASI', simpan waktu sekarang ke kolom 'status_update'
+        if ($request->status == 'DIKONFIRMASI') {
+            $data->status_update = Carbon::now();
         }
 
         if ($data->save()) {

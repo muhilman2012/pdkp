@@ -95,17 +95,34 @@
 @endsection
 
 @section('script')
-<script>
-    // ClassicEditor.create(document.querySelector("#editors"))
-    // .then((newEditor) => {
-    //     editor = newEditor;
-    // })
-    // .catch((error) => {
-    //     console.error(error);
-    // });
-    CKEDITOR.replace( 'editors', {
-        filebrowserUploadUrl: "{{route('admin.pengemudi.upload.editor', ['_token' => csrf_token() ])}}",
-        filebrowserUploadMethod: 'form'
-    });
-</script>
+    <script>
+        // ClassicEditor.create(document.querySelector("#editors"))
+        // .then((newEditor) => {
+        //     editor = newEditor;
+        // })
+        // .catch((error) => {
+        //     console.error(error);
+        // });
+        CKEDITOR.replace( 'editors', {
+            filebrowserUploadUrl: "{{route('admin.pengemudi.upload.editor', ['_token' => csrf_token() ])}}",
+            filebrowserUploadMethod: 'form'
+        });
+    </script>
+    @if(session()->has('success'))
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil',
+            text: '{{ session()->get("success") }}',
+        })
+    </script>
+    @elseif(session()->has('error'))
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Maaf',
+            text: '{{ session()->get("error") }}',
+        })
+    </script>
+    @endif
 @endsection

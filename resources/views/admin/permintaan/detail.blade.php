@@ -125,6 +125,18 @@
                         <p class="text-label fw-bold mb-1 ">Status :</p>
                         <p>{{ $data->status }}</p>
                     </div>
+                    <div class="col-md-6">
+                        <p class="text-label fw-bold mb-1 ">Review :</p>
+                        <p>{{ $data->review }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="text-label fw-bold mb-1 ">Rating Operasional :</p>
+                        <p>{{ $data->rating_ops }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="text-label fw-bold mb-1 ">Rating Pengemudi :</p>
+                        <p>{{ $data->rating_pengemudi }}</p>
+                    </div>
                 </div>
         </div>
     </div>

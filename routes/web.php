@@ -19,6 +19,7 @@ use App\Http\Controllers\pages\permintaan\eselonController;
 use App\Http\Controllers\pages\permintaan\tamuController;
 use App\Http\Controllers\pages\permintaan\wapresController;
 use App\Http\Controllers\auth\authUser;
+use App\Http\Controllers\auth\authPengemudi;
 use App\Http\Controllers\pages\profileUser;
 use App\Http\Controllers\PengemudiController;
 
@@ -34,12 +35,17 @@ use App\Http\Controllers\PengemudiController;
 */
 
 //route user
-Route::get('/', [authUser::class, 'index'])->name('pages.index');
+Route::get('/', [authUser::class, 'showLoginForm'])->name('login');
 Route::post('/store', [authUser::class, 'login'])->name('pages.index.store');
+Route::post('/login', [authUser::class, 'login'])->name('login.post');
+// Route::get('/login', [authUser::class, 'index'])->name('login'); // Pastikan ada route ini
+// Route::get('/pengemudi/login', [authPengemudi::class, 'index'])->name('pengemudi.login'); // Route login pengemudi
 Route::group(['middleware' => 'auth:web'], function () {
     Route::get('/dashboard', [indexController::class, 'dashboard'])->middleware('auth')->name('pages.dashboard');
+    Route::get('/history', [indexController::class, 'history'])->middleware('auth')->name('pages.history');
     Route::get('/detail/{id_permintaan}', [indexController::class, 'detail'])->middleware('auth')->name('pages.detail');
-    Route::post('/detail/{id_permintaan}/review', [IndexController::class, 'storeReview'])->middleware('auth')->name('permintaan.review.store');
+    Route::post('/detail/{id_permintaan}/review', [indexController::class, 'storeReview'])->middleware('auth')->name('permintaan.review.store');
+    Route::get('/detail/{id_permintaan}/cancel', [indexController::class, 'cancel'])->middleware('auth')->name('permintaan.cancel');   
     Route::get('/layanan', [indexController::class, 'layanan'])->name('pages.layanan');
     Route::get('/layanan/pegawai', [pegawaiController::class, 'index'])->name('layanan.pegawai');
     Route::post('/layanan/pegawai/store', [pegawaiController::class, 'store'])->name('layanan.pegawai.store');
@@ -55,16 +61,18 @@ Route::group(['middleware' => 'auth:web'], function () {
     Route::get('/profile/edit', [profileUser::class, 'edit'])->middleware('auth')->name('pages.editprofile');
     Route::post('/profile/update', [profileUser::class, 'update'])->middleware('auth')->name('pages.profile.update');
 
-    Route::get('/logout', [authUser::class, 'logout'])->name('logout');
+    Route::post('/logout', [authUser::class, 'logout'])->name('logout.user');
 
 });
 
 // route pengemudi
 Route::group(['middleware' => 'auth:pengemudi'], function () {
     Route::get('/dashboard/pengemudi', [PengemudiController::class, 'index'])->name('pengemudi.dashboard');
-    Route::get('/permintaan/{id}/detail', [PengemudiController::class, 'show'])->name('pengemudi.permintaan.detail');
-    Route::post('/permintaan/{id}/update-status', [PengemudiController::class, 'updateStatus'])->name('pengemudi.permintaan.updateStatus');
-    Route::get('/logout', [authUser::class, 'logout'])->name('logout');
+    Route::get('/pengemudi/history', [PengemudiController::class, 'history'])->middleware('auth')->name('pengemudi.history');
+    Route::get('/permintaan/{id_permintaan}/detail', [PengemudiController::class, 'show'])->middleware('auth')->name('pengemudi.detail');
+    Route::post('/permintaan/{id_permintaan}/update-status', [PengemudiController::class, 'updateStatus'])->name('pengemudi.permintaan.updateStatus');
+    
+    Route::post('/pengemudi/logout', [authPengemudi::class, 'logout'])->name('logout.pengemudi');
 });
 
 //route admin

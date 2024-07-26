@@ -59,44 +59,24 @@
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
-    <title>Dashboard - PDKP - Pelayanan Dukungan Kendaraan & Pengemudi</title>
+    <title>Histori Permintaan - PDKP</title>
 </head>
 
 <body>
     <section class="flex flex-col justify-start px-4 mx-auto bg-white max-w-md pt-5 pb-10 h-screen text-black bg-center bg-cover bg-[url('/assets/images/bg-main.png')]">
-        <div class="flex justify-between">
-            <img class="w-12" src="{{ url ('/assets/logo/logo-sekwapres.svg') }}" alt="Logo SETWAPRES">
-            <img class="w-4/12 h-12" src="{{ url ('/assets/logo/logo-pdkp-gold.png') }}" alt="Logo PDKP">
-        </div>
-        <div class="flex justify-between items-center mt-5">
-            <div class="flex flex-col">
-                <p class="font-medium text-regular">{{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}</p>
-                <p id="greeting" class="font-bold text-xl"></p>
-            </div>
-            <a href="{{ route('logout.user') }}" onclick="event.preventDefault(); document.getElementById('logout-form-user').submit();">
-                <ion-icon name="exit" class="w-8 h-8 text-danger"></ion-icon>
-            </a>
-            <form id="logout-form-user" action="{{ route('logout.user') }}" method="POST" style="display: none;">
-                @csrf
-            </form>
-        </div>
-        <div class="flex justify-between gap-4 text-white mt-5">
-            <a href="{{ route('pages.layanan') }}" class="flex flex-col justify-between items-end bg-gold w-full gap-3 p-3 rounded-lg">
-                <ion-icon name="git-pull-request-outline" class="w-6 h-6"></ion-icon>
-                <p class="font-medium text-sm text-left w-full">Permintaan Layanan Dukungan</p>
-            </a>
-            <a href="{{ route('pages.profile') }}" class="flex flex-col justify-start items-end bg-silver w-full gap-3 p-3 rounded-lg">
-                <ion-icon name="person-circle" class="w-6 h-6"></ion-icon>
-                <p class="font-medium text-sm text-left w-full">Profil<br /> Pengguna</p>
-            </a>
-        </div>
         <div class="text-black flex flex-col mt-5">
-            <h4 class="font-semibold text-regular mb-3">Info Update Layanan</h4>
+            <div class="flex justify-between">
+                <img class="w-12" src="{{ url ('/assets/logo/logo-sekwapres.svg') }}" alt="Logo SETWAPRES">
+                <img class="w-4/12 h-12" src="{{ url ('/assets/logo/logo-pdkp-gold.png') }}" alt="Logo PDKP">
+            </div>
+            <div class="flex mt-5 items-center justify-center gap-2 w-full">
+                <a href="{{ route ('pages.profile') }}">
+                    <ion-icon name="chevron-back-circle-outline" class="text-gold h-10 w-10"></ion-icon>
+                </a>
+                <p class="font-bold text-lg leading-5 w-full">History Permintaan</p>
+            </div>
             <div class="flex flex-col gap-4 w-full">
                 @foreach($permintaan as $item)
-                    @if($item->status == 'DIBATALKAN')
-                        @continue
-                    @endif
                     @php
                         $bgColor = '';
                         $statusText = $item->status; // Menyimpan status asli
@@ -112,8 +92,7 @@
                         } elseif ($item->status == 'SELESAI') {
                             $bgColor = 'bg-success';
                             $statusText = 'SELESAI';
-                        }
-                        elseif ($item->status == 'DIBATALKAN') {
+                        } elseif ($item->status == 'DIBATALKAN') {
                             $bgColor = 'bg-silver';
                             $statusText = 'DIBATALKAN';
                         }
@@ -148,11 +127,7 @@
                                     @else
                                         belum dikonfirmasi
                                     @endif
-                                </p>
-                            </div>
-                            <div class="flex justify-between items-center italic text-black text-xs">
-                                <p>
-                                {{ $item->kendaraan }} - {{ $item->nopol }}
+                                    , {{ $item->kendaraan }}
                                 </p>
                                 <p>Lihat Detail -></p>
                             </div>
@@ -162,36 +137,6 @@
             </div>
         </div>
     </section>
-
-    <script>
-        // Refresh halaman setiap 10 detik
-        setTimeout(function(){
-            location.reload();
-        }, 10000);
-    </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const greetingElement = document.getElementById('greeting');
-            const currentHour = new Date().getHours();
-            let greetingMessage = '';
-
-            if (currentHour >= 3 && currentHour < 10) {
-                greetingMessage = 'Selamat Pagi';
-            } else if (currentHour >= 10 && currentHour < 15) {
-                greetingMessage = 'Selamat Siang';
-            } else if (currentHour >= 15 && currentHour < 18) {
-                greetingMessage = 'Selamat Sore';
-            } else {
-                greetingMessage = 'Selamat Malam';
-            }
-
-            // Dapatkan nama pengguna dari server-side
-            const userName = @json(auth('web')->user()->name);
-
-            // Gabungkan ucapan dengan nama pengguna
-            greetingElement.innerHTML = `${greetingMessage}, ${userName}`;
-        });
-    </script>
     <script src="{{ url('/assets/app/js/app.js') }}"></script>
     <script src="{{ url('/assets/dist/js/alert.js') }}"></script>
     @if(session()->has('success'))

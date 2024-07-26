@@ -51,6 +51,8 @@
                         <span class="badge rounded-pill bg-primary px-3">DALAM PERJALANAN</span>
                     @elseif($item->status == 'SELESAI')
                         <span class="badge rounded-pill bg-success px-3">SELESAI</span>
+                    @elseif($item->status == 'DIBATALKAN')
+                        <span class="badge rounded-pill bg-black px-3">DIBATALKAN</span>
                     @endif
                     </td>
                     <td class="text-nowrap">
@@ -83,12 +85,16 @@
     </div>
 
     <!-- Elemen audio untuk notifikasi -->
-    <audio id="notificationSound" src="{{ asset('audio/car.mp3') }}" preload="auto"></audio>
+    <audio id="notificationSound" src="{{ asset('/audio/car.mp3') }}" preload="auto"></audio>
 
     <script>
         document.addEventListener('livewire:load', function () {
             window.addEventListener('newData', function () {
-                document.getElementById('notificationSound').play();
+                var audio = document.getElementById('notificationSound');
+                audio.volume = 100.0; // Set volume to maximum
+                audio.play().catch(error => {
+                    console.error("Audio play error :", error);
+                });
             });
         });
 

@@ -35,8 +35,11 @@
                     <td>{{ $item->name }}</td>
                     <td>{{ $item->phone }}</td>
                     <td class="text-nowrap">
-                        <a href="" class="btn btn-outline-warning btn-sm">
+                        <a href="{{ route('admin.pengemudi.edit', ['id' => $item->id]) }}" class="btn btn-outline-warning btn-sm">
                             <i class="fas fa-pencil-alt fa-sm fa-fw"></i>
+                        </a>
+                        <a href="{{ route('admin.pengemudi.detail', ['id' => $item->id]) }}" class="btn btn-outline-secondary btn-sm">
+                            <i class="fas fa-eye fa-sm fa-fw"></i>
                         </a>
                         <button wire:click="removed({{ $item->id_users }})" type="button"
                             class="btn btn-outline-danger btn-sm">

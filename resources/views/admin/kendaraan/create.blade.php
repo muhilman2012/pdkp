@@ -25,18 +25,6 @@
                 <div class="row">
                     <div class="col-md-5 me-2 ">
                         <div class="mb-4">
-                            <label for="images" class="form-label">Gambar Kendaraan</label>
-                            <input type="file" name="images" id="images"
-                                class="form-control @error('images') is-invalid @enderror">
-                            @error('images')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div> 
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="col-md-5 me-2 ">
-                        <div class="mb-4">
                             <label for="name" class="form-label">Nama Kendaraan</label>
                             <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
                                 value="{{ old('name') }}">

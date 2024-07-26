@@ -40,7 +40,8 @@ class Dashboard extends Component
 
     public function render()
     {
-        $query = permintaan::where('status', '!=', 'SELESAI');
+        // Hanya permintaan dengan status selain 'SELESAI' dan 'DIBATALKAN' yang akan ditampilkan
+        $query = permintaan::whereNotIn('status', ['SELESAI', 'DIBATALKAN']);
 
         if ($this->search) {
             $query = $query->where(function($q) {

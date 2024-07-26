@@ -43,7 +43,7 @@
                         quote: '#C8C8C8',
                         black: '#222A35',
                         gold: '#CB9638',
-                        silver: '#8B8B8B',
+                        silver: '#505050',
                         green: '#00A6A6',
                         red: '#880D1E',
                         danger: '#F80000',
@@ -60,12 +60,17 @@
 </head>
 
 <body>
-    <section
-        class="flex flex-col justify-between px-4 mx-auto bg-white max-w-md pt-5 pb-10 h-screen text-black bg-center bg-cover bg-[url('/assets/images/bg-main.png')]">
+    <section class="flex flex-col justify-between px-4 mx-auto bg-white max-w-md pt-5 pb-10 h-full text-black bg-center bg-cover bg-[url('/assets/images/bg-main.png')]">
         <div class="flex flex-col">
             <div class="flex justify-between">
-                <img class="w-12" src="{{ url ('/assets/logo/logo-sekwapres.svg') }}" alt="Logo Setwapres">
-                <img class="w-4/12 h-fit" src="{{ url ('/assets/logo/logo-pdkp-gold.png') }}" alt="Logo PDKP">
+                <img class="w-12" src="{{ url ('/assets/logo/logo-sekwapres.svg') }}" alt="Logo SETWAPRES">
+                <img class="w-4/12 h-12" src="{{ url ('/assets/logo/logo-pdkp-gold.png') }}" alt="Logo PDKP">
+            </div>
+            <div class="flex mt-5 items-center justify-center gap-2 w-full">
+                <a href="{{ route ('pages.dashboard') }}">
+                    <ion-icon name="chevron-back-circle-outline" class="text-gold h-10 w-10"></ion-icon>
+                </a>
+                <p class="font-bold text-lg leading-5 w-full">Profile Pegawai</p>
             </div>
             <div class="flex flex-col mt-5 items-center justify-center gap-4">
                 @if($user->foto)
@@ -101,10 +106,13 @@
                 </div>
             </div>
         </div>
-        <div class="flex flex-col mt-4 gap-2">
+        <div class="flex flex-col mt-4 gap-2 mb-4">
+            <a href="{{ route('pages.history') }}" class="w-full rounded bg-transparent text-center text-gold font-semibold p-3 outline outline-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white focus:border-white">Histori Permintaan</a>
             <a href="{{ route('pages.editprofile') }}" class="w-full rounded bg-gold text-center text-white font-semibold p-3 hover:bg-[#B57F21] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white focus:border-white">Edit Profil</a>
-            <a href="{{ route('pages.dashboard') }}" class="w-full rounded bg-transparent text-center text-danger font-semibold p-3 outline outline-2">Kembali</a>
-            <a href="{{ route('logout') }}" class="w-full rounded bg-danger text-center text-white font-semibold p-3 hover:bg-[#DE0000] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white focus:border-white">Keluar</a>
+            <a href="{{ route('logout.user') }}" onclick="event.preventDefault(); document.getElementById('logout-form-user').submit();" class="w-full rounded bg-danger text-center text-white font-semibold p-3 hover:bg-[#DE0000] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white focus:border-white">Keluar</a>
+            <form id="logout-form-user" action="{{ route('logout.user') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
         </div>
     </section>
     

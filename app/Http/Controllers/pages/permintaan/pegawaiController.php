@@ -24,7 +24,7 @@ class pegawaiController extends Controller
             'capacity'                  => 'required',
             'tipe_perjalanan'           => 'required',
             'jam_awal'                  => 'required',
-            'jam_akhir'                 => 'nullable',
+            'jam_akhir'                 => 'nullable|after:jam_awal', // pastikan jam_akhir setelah jam_awal jika diisi
             'date'                      => 'required',
             'tujuan_awal'               => 'required',
             'tujuan_akhir'              => 'required',
@@ -35,6 +35,7 @@ class pegawaiController extends Controller
             'capacity.required'         => 'Mohon isi Jumlah Penumpang',
             'tipe_perjalanan.required'  => 'Mohon pilih Tipe Perjalanan',
             'jam_awal.required'         => 'Mohon isi Jam Pengantaran',
+            'jam_akhir.after'           => 'Jam Kembali harus setelah Jam Pengantaran',
             'date.required'             => 'Mohon isi Tanggal Pengantaran',
             'tujuan_awal.required'      => 'Mohon isi Lokasi Awal Pengantaran',
             'tujuan_akhir.required'     => 'Mohon isi Lokasi Akhir Pengantaran',
@@ -72,6 +73,7 @@ class pegawaiController extends Controller
         $data->capacity         = $request->capacity;
         $data->tipe_perjalanan  = $request->tipe_perjalanan;
         $data->jam_awal         = $request->jam_awal;
+        $data->jam_akhir        = $request->jam_akhir;
         $data->date             = $request->date;
         $data->tujuan_awal      = $request->tujuan_awal;
         $data->tujuan_akhir     = $request->tujuan_akhir;

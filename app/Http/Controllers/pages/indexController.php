@@ -19,15 +19,18 @@ class indexController extends Controller
         return view('pages.layanan');
     }
 
-    public function dashboard(){
+    // Method untuk menampilkan dashboard
+    public function dashboard()
+    {
         $user = Auth::user();
-        $permintaan = permintaan::with('pengemudi')->where('user_id', $user->id)->get();
-        return view('pages.dashboard',[
-            'user'          => $user,
-            'permintaan'    => $permintaan,
+        $permintaan = permintaan::where('user_id', $user->id)->get();
+        return view('pages.dashboard', [
+            'user' => $user,
+            'permintaan' => $permintaan,
         ]);
     }
 
+    // Method untuk menampilkan detail permintaan
     public function detail($id_permintaan)
     {
         $permintaan = permintaan::findOrFail($id_permintaan);
@@ -36,31 +39,43 @@ class indexController extends Controller
         ]);
     }
 
-    public function storeReview(Request $request, $id_permintaan)
+    public function history()
     {
-        $validator = Validator::make($request->all(), [
-            'review' => 'required|string|max:255',
-            'rating' => 'required|integer|min:1|max:5',
-        ], [
-            'review.required' => 'Harap isi kolom review',
-            'review.string'   => 'Review harus berupa teks',
-            'review.max'      => 'Review tidak boleh lebih dari 255 karakter',
-            'rating.required' => 'Harap pilih rating',
-            'rating.integer'  => 'Rating harus berupa angka',
-            'rating.min'      => 'Rating minimal adalah 1',
-            'rating.max'      => 'Rating maksimal adalah 5',
+        $user = Auth::user();
+        $permintaan = permintaan::where('user_id', $user->id)->get();
+        return view('pages.history', [
+            'user' => $user,
+            'permintaan' => $permintaan,
         ]);
-
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-
-        $permintaan = permintaan::where('id_permintaan', $id_permintaan)->firstOrFail();
-        $permintaan->review = $request->review;
-        $permintaan->rating = $request->rating;
-        $permintaan->save();
-
-        return redirect()->route('pages.dashboard', ['id_permintaan' => $id_permintaan])->with('success', 'Terimakasih telah memberikan Review');
     }
 
+    // Method untuk menyimpan review dan rating
+    public function storeReview(Request $request, $id_permintaan)
+    {
+        $request->validate([
+            'review' => 'required|string|max:255',
+            'rating_ops' => 'required|integer|min:1|max:5',
+            'rating_driver' => 'required|integer|min:1|max:5',
+        ]);
+
+        $permintaan = permintaan::findOrFail($id_permintaan);
+        $permintaan->review = $request->input('review');
+        $permintaan->rating_ops = $request->input('rating_ops');
+        $permintaan->rating_driver = $request->input('rating_driver');
+        $permintaan->save();
+
+        return redirect()->route('pages.detail', ['id_permintaan' => $permintaan->id_permintaan])
+            ->with('success', 'Review dan rating berhasil disimpan!');
+    }
+
+    // Method untuk membatalkan permintaan
+    public function cancel($id_permintaan)
+    {
+        $permintaan = permintaan::findOrFail($id_permintaan);
+        $permintaan->status = 'DIBATALKAN';
+        $permintaan->save();
+
+        return redirect()->route('pages.dashboard')
+            ->with('success', 'Permintaan berhasil dibatalkan!');
+    }
 }

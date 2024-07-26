@@ -50,6 +50,8 @@
                         <span class="badge rounded-pill bg-primary px-3">DALAM PERJALANAN</span>
                     @elseif($item->status == 'SELESAI')
                         <span class="badge rounded-pill bg-success px-3">SELESAI</span>
+                    @elseif($item->status == 'DIBATALKAN')
+                        <span class="badge rounded-pill bg-black px-3">DIBATALKAN</span>
                     @endif
                     </td>
                     <td class="text-nowrap">

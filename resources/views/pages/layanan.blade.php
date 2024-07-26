@@ -44,7 +44,7 @@
                         quote: '#C8C8C8',
                         black: '#222A35',
                         gold: '#CB9638',
-                        silver: '#8B8B8B',
+                        silver: '#505050',
                         green: '#00A6A6',
                         success: '#4CB963',
                         danger: '#F80000',

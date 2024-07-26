@@ -43,7 +43,7 @@
                         quote: '#C8C8C8',
                         black: '#222A35',
                         gold: '#CB9638',
-                        silver: '#8B8B8B',
+                        silver: '#505050',
                         green: '#00A6A6',
                         red: '#880D1E',
                         danger: '#F80000',
@@ -61,10 +61,10 @@
 
 <body>
     <section
-        class="flex flex-col justify-start px-4 mx-auto bg-white max-w-md pt-5 pb-10 h-screen text-black bg-center bg-cover bg-[url('/assets/images/bg-main.png')]">
+        class="flex flex-col justify-start px-4 mx-auto bg-white max-w-md pt-5 pb-10 h-full text-black bg-center bg-cover bg-[url('/assets/images/bg-main.png')]">
         <div class="flex justify-between">
             <img class="w-12" src="{{ asset('/assets/logo/logo-sekwapres.svg') }}" alt="logo setwapres">
-            <img class="w-4/12 h-fit" src="{{ asset('/assets/logo/logo-pdkp-gold.png') }}" alt="logo pdkp">
+            <img class="w-4/12 h-12" src="{{ asset('/assets/logo/logo-pdkp-gold.png') }}" alt="logo pdkp">
         </div>
         <div class="flex mt-5 items-center justify-center gap-2 w-full">
             <a href="{{ route('pages.profile') }}">

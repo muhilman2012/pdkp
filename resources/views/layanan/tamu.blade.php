@@ -43,7 +43,7 @@
                         quote: '#C8C8C8',
                         black: '#222A35',
                         gold: '#CB9638',
-                        silver: '#8B8B8B',
+                        silver: '#505050',
                         green: '#00A6A6',
                         success: '#4CB963',
                         danger: '#F80000',
@@ -64,7 +64,7 @@
     <section class="flex flex-col justify-start px-4 mx-auto bg-white max-w-md pt-5 pb-10 h-full text-black bg-center bg-cover bg-[url('/assets/images/bg-main.png')]">
         <div class="flex justify-between">
             <img class="w-12" src="{{ asset('/assets/logo/logo-sekwapres.svg') }}" alt="Logo SETWAPRES">
-            <img class="w-4/12 h-fit" src="{{ asset('/assets/logo/logo-pdkp-gold.png') }}" alt="Logo PDKP">
+            <img class="w-4/12 h-12" src="{{ asset('/assets/logo/logo-pdkp-gold.png') }}" alt="Logo PDKP">
         </div>
         <div class="flex mt-5 items-center justify-center gap-2 w-full">
             <a href="{{ route('pages.layanan') }}">
@@ -143,7 +143,7 @@
                             <label class="text-black font-medium text-[14px]">Tipe Perjalanan</label>
                             <div class="grid grid-cols-2 gap-4 w-full">
                                 <div class="flex items-center">
-                                    <input id="satu_arah" name="tipe_perjalanan" type="radio" value="Sekali Jalan" class="mt-[4px] bg-white p-[12px] rounded w-fit focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold focus:border-gold">
+                                    <input id="satu_arah" name="tipe_perjalanan" type="radio" value="Sekali Jalan" class="mt-[4px] bg-white p-[12px] rounded w-fit focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold focus:border-gold" onchange="toggleJamFields()">
                                     <label for="satu_arah" class="text-black font-medium text-[14px] ml-2">Sekali Jalan</label>
                                     @error('satu_arah')
                                     <div class="invalid-feedback">
@@ -152,7 +152,7 @@
                                     @enderror
                                 </div>
                                 <div class="flex items-center">
-                                    <input id="pulang_pergi" name="tipe_perjalanan" type="radio" value="Pulang Pergi" class="mt-[4px] bg-white p-[12px] rounded w-fit focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold focus:border-gold">
+                                    <input id="pulang_pergi" name="tipe_perjalanan" type="radio" value="Pulang Pergi" class="mt-[4px] bg-white p-[12px] rounded w-fit focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold focus:border-gold" onchange="toggleJamFields()">
                                     <label for="pulang_pergi" class="text-black font-medium text-[14px] ml-2">Pulang Pergi</label>
                                     @error('pulang_pergi')
                                     <div class="invalid-feedback">
@@ -195,7 +195,7 @@
                             </div>
                             @enderror
                         </div>
-                        <div class="col-span-1 items-center">
+                        <div id="jam_akhir_container" class="col-span-1 items-center hidden">
                             <label for="jam_akhir" class="text-black font-medium text-[14px]">Jam Penjemputan</label>
                             <input id="jam_akhir" name="jam_akhir" type="time" placeholder="jam penjemputan" class="mt-[4px] bg-white p-[12px] placeholder:text-placeholder rounded w-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold focus:border-gold">
                             @error('jam_akhir')
@@ -241,6 +241,22 @@
                 penggunaFields.classList.remove('hidden');
             }
         }
+
+        function toggleJamFields() {
+            var pulangPergi = document.getElementById('pulang_pergi');
+            var jamAkhirContainer = document.getElementById('jam_akhir_container');
+            if (pulangPergi.checked) {
+                jamAkhirContainer.classList.remove('hidden');
+            } else {
+                jamAkhirContainer.classList.add('hidden');
+            }
+        }
+
+        // Tambahkan event listener saat halaman dimuat untuk mengatur ulang bidang
+        document.addEventListener('DOMContentLoaded', function () {
+            togglePenggunaFields();
+            toggleJamFields();
+        });
     </script>
     <script src="{{ url('/assets/app/js/app.js') }}"></script>
     <script src="{{ url('/assets/dist/js/alert.js') }}"></script>

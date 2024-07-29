@@ -9,24 +9,24 @@ use Livewire\WithPagination;
 class Data extends Component
 {
     use WithPagination;
-    public $id_pengemudi;
+    public $id;
     public $search, $pages;
 
     protected $listeners = ["deleteAction" => "delete"];
 
     public function removed($id){
-        $this->id_pengemudi = $id;
-        $this->dispatchBrowserEvent('deleteConfrimed');
+        $this->id = $id;
+        $this->dispatch('deleteConfirmed');
     }
 
     public function delete()
     {
-        $data = pengemudi::find($this->id_pengemudi);
+        $data = pengemudi::find($this->id);
         if ($data) {
             $data->delete();
-            $this->dispatchBrowserEvent('success', 'Data has been delete!');
+            $this->dispatch('success', 'Data has been delete!');
         } else {
-            $this->dispatchBrowserEvent('error', 'sorry something problem in database!');
+            $this->dispatch('error', 'sorry something problem in database!');
         }
     }
 

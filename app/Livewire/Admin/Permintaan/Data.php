@@ -14,8 +14,8 @@ class Data extends Component
 
     protected $listeners = ["deleteAction" => "delete"];
 
-    public function removed($id){
-        $this->id_permintaan = $id;
+    public function removed($id_permintaan){
+        $this->id_permintaan = $id_permintaan;
         $this->dispatch('deleteConfirmed');
     }
 

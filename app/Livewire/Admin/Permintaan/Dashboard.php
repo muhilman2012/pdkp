@@ -21,10 +21,10 @@ class Dashboard extends Component
         $this->previousCount = permintaan::count();
     }
 
-    public function removed($id)
+    public function removed($id_permintaan)
     {
-        $this->id_permintaan = $id;
-        $this->dispatchBrowserEvent('deleteConfrimed');
+        $this->id_permintaan = $id_permintaan;
+        $this->dispatch('deleteConfrimed');
     }
 
     public function delete()
@@ -32,9 +32,9 @@ class Dashboard extends Component
         $data = permintaan::find($this->id_permintaan);
         if ($data) {
             $data->delete();
-            $this->dispatchBrowserEvent('success', 'Data has been deleted!');
+            $this->dispatch('success', 'Data has been deleted!');
         } else {
-            $this->dispatchBrowserEvent('error', 'Sorry, there is a problem with the database!');
+            $this->dispatch('error', 'Sorry, there is a problem with the database!');
         }
     }
 

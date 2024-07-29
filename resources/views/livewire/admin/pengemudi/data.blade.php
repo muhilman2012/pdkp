@@ -41,8 +41,7 @@
                         <a href="{{ route('admin.pengemudi.detail', ['id' => $item->id]) }}" class="btn btn-outline-secondary btn-sm">
                             <i class="fas fa-eye fa-sm fa-fw"></i>
                         </a>
-                        <button wire:click="removed({{ $item->id_users }})" type="button"
-                            class="btn btn-outline-danger btn-sm">
+                        <button wire:click="removed({{ $item->id }})" type="button" class="btn btn-outline-danger btn-sm">
                             <i class="fas fa-trash fa-sm fa-fw"></i>
                         </button>
                     </td>
@@ -72,20 +71,20 @@
 
 
     <script>
-        document.addEventListener('deleteConfrimed', function() {
+        document.addEventListener('deleteConfirmed', function() {
             Swal.fire({
                     title: "Hapus?",
-                    text: "Apa Kamu yakin menghapus berita ini?",
+                    text: "Hapus Data Ini?",
                     icon: "warning",
                     showCancelButton: true,
-                    confirmButtonText: 'Yes, delete!',
+                    confirmButtonText: 'Ya, Hapus!',
                     cancelButtonText: 'Tidak',
                 })
                 .then((next) => {
                     if (next.isConfirmed) {
-                        Livewire.emit('deleteAction');
+                        Livewire.dispatch('deleteAction');
                     } else {
-                        Swal.fire("Your news is save!");
+                        Swal.fire("Data tetap Aman!");
                     }
                 });
         })
@@ -93,14 +92,14 @@
             Swal.fire({
                 icon: 'success',
                 title: 'Good Jobs!',
-                text: event.detail,
+                text: event.detail.message,
             })
         })
         window.addEventListener('erros', event => {
             Swal.fire({
                 icon: 'error',
                 title: 'Opps...!',
-                text: event.detail,
+                text: event.detail.message,
             })
         })
     </script>

@@ -100,7 +100,7 @@
             cancelButtonText: 'Tidak',
         }).then((next) => {
             if (next.isConfirmed) {
-                Livewire.emit('deleteAction');
+                Livewire.dispatch('deleteAction');
             } else {
                 Swal.fire("Data tetap Aman!");
             }
@@ -111,7 +111,7 @@
         Swal.fire({
             icon: 'success',
             title: 'Good Jobs!',
-            text: event.detail,
+            text: event.detail.message,
         });
     });
 
@@ -119,7 +119,7 @@
         Swal.fire({
             icon: 'error',
             title: 'Opps...!',
-            text: event.detail,
+            text: event.detail.message,
         });
     });
 </script>

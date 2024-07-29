@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\permintaan;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -23,7 +24,21 @@ class indexController extends Controller
     public function dashboard()
     {
         $user = Auth::user();
-        $permintaan = permintaan::where('user_id', $user->id)->get();
+        
+        // Ambil permintaan yang memenuhi syarat
+        $permintaan = Permintaan::where('user_id', $user->id)
+            ->where(function($query) {
+                $query->where('status', '!=', 'DIBATALKAN')
+                    ->where(function($query) {
+                        $query->where('status', '!=', 'SELESAI')
+                                ->orWhere(function($query) {
+                                    $query->where('status', 'SELESAI')
+                                        ->where('updated_at', '>=', Carbon::now()->subDay());
+                                });
+                    });
+            })
+            ->get();
+        
         return view('pages.dashboard', [
             'user' => $user,
             'permintaan' => $permintaan,

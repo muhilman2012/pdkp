@@ -13,5 +13,5 @@ class kendaraan extends Model
 
     protected $primaryKey = 'id';
 
-    protected $fillable = ['name', 'nopol'];
+    protected $fillable = ['name', 'nopol', 'warna'];
 }

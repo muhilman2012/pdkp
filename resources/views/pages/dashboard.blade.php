@@ -94,9 +94,21 @@
             <h4 class="font-semibold text-regular mb-3">Info Update Layanan</h4>
             <div class="flex flex-col gap-4 w-full">
                 @foreach($permintaan as $item)
-                    @if($item->status == 'DIBATALKAN' || $item->status == 'SELESAI')
+                    @php
+                        $hideCompleted = false;
+                        if ($item->status == 'SELESAI') {
+                            $statusTime = \Carbon\Carbon::parse($item->updated_at);
+                            $currentTime = \Carbon\Carbon::now();
+                            if ($statusTime->diffInHours($currentTime) >= 24) {
+                                $hideCompleted = true;
+                            }
+                        }
+                    @endphp
+
+                    @if($item->status == 'DIBATALKAN' || $hideCompleted)
                         @continue
                     @endif
+
                     @php
                         $bgColor = '';
                         $statusText = $item->status; // Menyimpan status asli
@@ -108,16 +120,16 @@
                             $statusText = 'DIKONFIRMASI';
                         } elseif ($item->status == 'DALAM PERJALANAN') {
                             $bgColor = 'bg-blue';
-                            $statusText = 'DALAM PERJALANAAN';
+                            $statusText = 'DALAM PERJALANAN';
                         } elseif ($item->status == 'SELESAI') {
                             $bgColor = 'bg-success';
                             $statusText = 'SELESAI';
-                        }
-                        elseif ($item->status == 'DIBATALKAN') {
+                        } elseif ($item->status == 'DIBATALKAN') {
                             $bgColor = 'bg-silver';
                             $statusText = 'DIBATALKAN';
                         }
                     @endphp
+
                     <a href="{{ route('pages.detail', ['id_permintaan' => $item->id_permintaan]) }}" class="flex bg-white p-3 rounded-lg shadow-md gap-3 items-start w-full">
                         <div x-data x-init="$nextTick(() => { document.querySelectorAll('ion-icon').forEach(icon => { const newIcon = document.createElement('ion-icon'); newIcon.setAttribute('name', icon.getAttribute('name')); newIcon.className = icon.className; icon.replaceWith(newIcon); }); })">
                             @if($item->layanan == 'Wapres')
@@ -152,7 +164,7 @@
                             </div>
                             <div class="flex justify-between items-center italic text-black text-xs">
                                 <p>
-                                {{ $item->kendaraan }} - {{ $item->nopol }}
+                                    {{ $item->kendaraan->name }} - {{ $item->nopol }}
                                 </p>
                                 <p>Lihat Detail -></p>
                             </div>

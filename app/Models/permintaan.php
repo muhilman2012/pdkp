@@ -46,7 +46,7 @@ class Permintaan extends Model
         'status',
         'status_update',
         'pengemudi_id',
-        'kendaraan',
+        'kendaraan_id',
         'file',
         'rating_ops',
         'rating_driver',
@@ -79,6 +79,6 @@ class Permintaan extends Model
 
     public function kendaraan()
     {
-        return $this->belongsTo(Kendaraan::class, 'kendaraan_id');
+        return $this->belongsTo(kendaraan::class, 'kendaraan_id');
     }
 }

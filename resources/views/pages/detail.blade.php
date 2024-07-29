@@ -100,7 +100,7 @@
                             @endif
                         </div>
                         <div class="col-span-9">
-                            <p class="font-semibold text-sm leading-5">{{ $permintaan->kendaraan }} - {{ $permintaan->warna }}</p>
+                            <p class="font-semibold text-sm leading-5">{{ $permintaan->kendaraan->name }} - {{ $permintaan->warna }}</p>
                             <p class="font-bold text-sm leading-5">{{ $permintaan->nopol }}</p>
                             @if ($permintaan->pengemudi)
                                 <p class="font-bold text-md text-left leading-5">{{ $permintaan->pengemudi->name }}</p>

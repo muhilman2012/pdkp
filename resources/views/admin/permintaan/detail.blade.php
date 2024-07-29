@@ -119,7 +119,13 @@
                     </div>
                     <div class="col-md-6">
                         <p class="text-label fw-bold mb-1 ">Kendaraan :</p>
-                        <p>{{ $data->kendaraan }}</p>
+                        <p>
+                            @if($data->kendaraan)
+                                {{ $data->kendaraan->name }}
+                            @else
+                                kendaraan belum dikonfirmasi
+                            @endif
+                        </p>
                     </div>
                     <div class="col-md-6">
                         <p class="text-label fw-bold mb-1 ">Status :</p>
@@ -135,7 +141,7 @@
                     </div>
                     <div class="col-md-6">
                         <p class="text-label fw-bold mb-1 ">Rating Pengemudi :</p>
-                        <p>{{ $data->rating_pengemudi }}</p>
+                        <p>{{ $data->rating_driver }}</p>
                     </div>
                 </div>
         </div>

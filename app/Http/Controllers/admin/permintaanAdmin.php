@@ -106,7 +106,7 @@ class permintaanAdmin extends Controller
     {
         $validator = Validator::make($request->all(), [
             'pengemudi_id'              => 'required',
-            'kendaraan_id'              => 'required',  // Ubah dari 'kendaraan' menjadi 'kendaraan_id'
+            'kendaraan_id'              => 'required', 
             'status'                    => 'required',
         ], [
             'pengemudi_id.required'     => 'Mohon pilih pengemudi',
@@ -132,10 +132,15 @@ class permintaanAdmin extends Controller
 
         // Update data permintaan
         $data->pengemudi_id     = $request->pengemudi_id;
-        $data->kendaraan        = $kendaraan->name;
+        $data->kendaraan_id     = $kendaraan->id;
         $data->nopol            = $kendaraan->nopol;
         $data->warna            = $kendaraan->warna;
         $data->status           = $request->status;
+
+        // Update pesan jika ada perubahan
+        if ($request->has('pesan') && $request->pesan !== $data->pesan) {
+            $data->pesan = $request->pesan;
+        }
 
         // Jika status berubah menjadi 'DIKONFIRMASI', simpan waktu sekarang ke kolom 'status_update'
         if ($request->status == 'DIKONFIRMASI') {

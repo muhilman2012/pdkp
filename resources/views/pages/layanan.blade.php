@@ -66,7 +66,7 @@
         class="flex flex-col justify-start px-4 mx-auto bg-white max-w-md pt-5 pb-10 h-screen text-black bg-center bg-cover bg-[url('/assets/images/bg-main.png')]">
         <div class="flex justify-between">
             <img class="w-12" src="{{ url ('/assets/logo/logo-sekwapres.svg') }}" alt="logo sekwapres">
-            <img class="w-4/12 h-fit" src="{{ url ('/assets/logo/logo-pdkp-gold.png') }}" alt="logo pdkp">
+            <img class="w-4/12 h-12" src="{{ url ('/assets/logo/logo-pdkp-gold.png') }}" alt="logo pdkp">
         </div>
         <div class="flex mt-5 items-center justify-center gap-2 w-full">
             <a href="{{ route ('pages.dashboard') }}">

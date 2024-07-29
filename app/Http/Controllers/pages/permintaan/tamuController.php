@@ -24,7 +24,7 @@ class tamuController extends Controller
             'capacity'                  => 'required',
             'tipe_perjalanan'           => 'required',
             'jam_awal'                  => 'required',
-            'jam_akhir'                 => 'nullable',
+            'jam_akhir'                 => 'nullable|after:jam_awal', // pastikan jam_akhir setelah jam_awal jika diisi
             'date'                      => 'required',
             'tujuan_awal'               => 'required',
             'tujuan_akhir'              => 'required',
@@ -35,6 +35,7 @@ class tamuController extends Controller
             'capacity.required'         => 'Mohon isi Jumlah Penumpang',
             'tipe_perjalanan.required'  => 'Mohon pilih Tipe Perjalanan',
             'jam_awal.required'         => 'Mohon isi Jam Pengantaran',
+            'jam_akhir.after'           => 'Jam Kembali harus setelah Jam Pengantaran',
             'date.required'             => 'Mohon isi Tanggal Pengantaran',
             'tujuan_awal.required'      => 'Mohon isi Lokasi Awal Pengantaran',
             'tujuan_akhir.required'     => 'Mohon isi Lokasi Akhir Pengantaran',
@@ -108,7 +109,7 @@ class tamuController extends Controller
 
         // Tambahkan data default
         $data->status           = 'BARU';  // status layanan terbaru
-        $data->layanan          = 'Tamu';  // default layanan pegawai
+        $data->layanan          = 'Tamu';  // default layanan tamu
 
         if ($data->save()) {
             return redirect()->route('pages.dashboard')->with('success', 'Permintaan Kendaraan Berhasil');

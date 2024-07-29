@@ -29,7 +29,7 @@ return new class extends Migration
             $table->string('file')->nullable();
             $table->unsignedBigInteger('pengemudi_id')->nullable(); // Tambahkan nullable jika pengemudi_id bisa kosong
             $table->foreign('pengemudi_id')->references('id')->on('pengemudi');
-            $table->string('kendaraan')->nullable();
+            $table->string('kendaraan_id')->nullable();
             $table->string('nopol')->nullable();
             $table->string('warna')->nullable();
             $table->string('status');

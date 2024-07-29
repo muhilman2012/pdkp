@@ -127,7 +127,7 @@
                                     @else
                                         belum dikonfirmasi
                                     @endif
-                                    , {{ $item->kendaraan }}
+                                    , {{ $item->kendaraan->name }}
                                 </p>
                                 <p>Lihat Detail -></p>
                             </div>

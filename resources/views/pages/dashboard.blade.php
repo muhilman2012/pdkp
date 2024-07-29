@@ -164,7 +164,11 @@
                             </div>
                             <div class="flex justify-between items-center italic text-black text-xs">
                                 <p>
-                                    {{ $item->kendaraan->name }} - {{ $item->nopol }}
+                                    @if($item->kendaraan)
+                                        {{ $item->kendaraan->name }} - {{ $item->nopol }}
+                                    @else
+                                        belum dikonfirmasi
+                                    @endif
                                 </p>
                                 <p>Lihat Detail -></p>
                             </div>

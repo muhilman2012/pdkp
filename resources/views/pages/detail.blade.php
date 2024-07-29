@@ -100,13 +100,19 @@
                             @endif
                         </div>
                         <div class="col-span-9">
-                            <p class="font-semibold text-sm leading-5">{{ $permintaan->kendaraan->name }} - {{ $permintaan->warna }}</p>
+                            <p class="font-semibold text-sm leading-5">
+                            @if ($permintaan->kendaraan)
+                                {{ $permintaan->kendaraan->name }} - {{ $permintaan->warna }}
+                            @else
+                                <p class="font-bold text-md text-left leading-5 italic">belum dikonfirmasi</p>
+                            @endif
+                            </p>
                             <p class="font-bold text-sm leading-5">{{ $permintaan->nopol }}</p>
                             @if ($permintaan->pengemudi)
                                 <p class="font-bold text-md text-left leading-5">{{ $permintaan->pengemudi->name }}</p>
                                 <a class="text-blue-500 underline" href="https://wa.me/62{{ $permintaan->pengemudi->phone }}" target="_blank">{{ $permintaan->pengemudi->phone }}</a>
                             @else
-                                <p class="font-bold text-md text-left leading-5">Belum dikonfirmasi</p>
+                                <p class="font-bold text-md text-left leading-5 italic">belum dikonfirmasi</p>
                             @endif
                         </div>
                     </div>
